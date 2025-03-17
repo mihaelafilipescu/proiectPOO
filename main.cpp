@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <chrono>
 
 class Animal {
     std::string Name;
@@ -10,7 +9,6 @@ class Animal {
     int FeedTime;
     std::string ResultedGood;
     int Fed;
-    std::chrono::steady_clock::time_point lastFedTime; // Momentul ultimei hrăniri
 
 public:
     const std::string& getName() const { return Name; };
@@ -18,8 +16,8 @@ public:
     int getFeedTime() const { return FeedTime; };
     int getLevelUnlock() const { return LevelUnlock; };
     const std::string& getResultedGood() const { return ResultedGood; };
-    int getFed() const { return Fed; };
-    int setFed(int Fed_) { Fed = Fed_; };
+    int getFed() { return Fed; };
+    void setFed(int Fed_) { Fed = Fed_; };
     Animal(const int x) : Fed{x} {};
     Animal(const std::string& Name_, int Cost_, int LevelUnlock_, int FeedTime_, const std::string& ResultedGood_) : Name{Name_}, Cost{Cost_},
         LevelUnlock{LevelUnlock_}, FeedTime{FeedTime_}, ResultedGood{ResultedGood_} {};
@@ -29,12 +27,11 @@ public:
     ~Animal() = default;
 
     void feedAnimal(Animal& animal) {
-        int intervalSec = animal.getFeedTime();
         std::string raspuns;
         std::string raspuns2;
         std::cout<<"Vrei sa hranesti " << animal.getName() <<"? (da/nu)\n";
         std::cin >> raspuns;
-        if (animal.getFed() == 0 || canBeFed(intervalSec)){
+        if (animal.getFed() == 0){
             if (animal.getName() == "Goat"){
                 std:: cout<< "Cine este adevaratul " << animal.getName() << " ??????????????????????\n";
                 std:: cout<< "Messi sau Ronaldo? \n" ;
@@ -50,7 +47,6 @@ public:
             if (raspuns == "DA" || raspuns == "da" || raspuns == "Da") {
                 //baga operator de afisare;
                 animal.setFed(1);
-                lastFedTime = std::chrono::steady_clock::now();
                 std::cout << animal.getName() <<" a fost hranit!\n";
             }
             else {
@@ -60,12 +56,6 @@ public:
          else{
              std:: cout<< animal.getName() << " a fost deja hranit!";
          }
-    }
-
-    bool canBeFed(int intervalSec) {
-        auto now = std::chrono::steady_clock::now();
-        auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(now - lastFedTime).count();
-        return elapsed >= intervalSec;
     }
 
 };
