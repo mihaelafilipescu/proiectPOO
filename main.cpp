@@ -17,7 +17,7 @@ public:
     int getLevelUnlock() const { return LevelUnlock; };
     const std::string& getResultedGood() const { return ResultedGood; };
     int getFed() { return Fed; };
-    void setFed(int Fed_) { Fed = Fed_; };
+    void setFed( int Fed_) { Fed = Fed_; };
     Animal(const int x) : Fed{x} {};
     Animal(const std::string& Name_, int Cost_, int LevelUnlock_, int FeedTime_, const std::string& ResultedGood_) : Name{Name_}, Cost{Cost_},
         LevelUnlock{LevelUnlock_}, FeedTime{FeedTime_}, ResultedGood{ResultedGood_} {};
