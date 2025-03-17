@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <iomanip>
+#include <unistd.h>
 
 class Animal {
     std::string Name;
@@ -31,33 +33,27 @@ public:
         std::string raspuns2;
         std::cout<<"Vrei sa hranesti " << animal.getName() <<"? (da/nu)\n";
         std::cin >> raspuns;
-        if (animal.getFed() == 0){
-            if (animal.getName() == "Goat"){
-                std:: cout<< "Cine este adevaratul " << animal.getName() << " ??????????????????????\n";
-                std:: cout<< "Messi sau Ronaldo? \n" ;
-                std:: cin >> raspuns2;
-                if (raspuns2 == "Ronaldo" || raspuns2 == "RONALDO"){
-                    std::cout <<"Raspuns gresit! Nu poti hrani "<< animal.getName() << "\n";
-                    raspuns = "nu";
-                }
-                else{
-                    std:: cout<< "Raspuns corect!\n";
-                }
+        if (animal.getName() == "Goat"){
+            std:: cout<< "Cine este adevaratul " << animal.getName() << " ??????????????????????\n";
+            std:: cout<< "Messi sau Ronaldo? \n" ;
+            std:: cin >> raspuns2;
+            if (raspuns2 == "Ronaldo" || raspuns2 == "RONALDO"){
+                std::cout <<"Raspuns gresit! Nu poti hrani "<< animal.getName() << "\n";
+                raspuns = "nu";
             }
-            if (raspuns == "DA" || raspuns == "da" || raspuns == "Da") {
-                //baga operator de afisare;
-                animal.setFed(1);
-                std::cout << animal.getName() <<" a fost hranit!\n";
-            }
-            else {
-                std::cout << animal.getName() << " nu a fost hranit!\n";
+            else{
+                std:: cout<< "Raspuns corect!\n";
             }
         }
-         else{
-             std:: cout<< animal.getName() << " a fost deja hranit!";
-         }
+        if (raspuns == "DA" || raspuns == "da" || raspuns == "Da") {
+            std::cout << "Trebuie sa astepti " << animal.getFeedTime() << " secunde ca " << animal.getName() << " sa fie hranit!\n";
+            sleep(animal.getFeedTime());
+            std::cout << "Felicitari, ai primit " << animal.getResultedGood() << " pentru ca ai hranit " << animal.getName() << "!\n";
+        }
+        else {
+            std::cout << animal.getName() << " nu a fost hranit!\n";
+        }
     }
-
 };
 
 class Plant {
@@ -74,6 +70,20 @@ public:
         LevelUnlock{LevelUnlock_}, GrowTime{GrowTime_}{};
 
     ~Plant() = default;
+
+   void harvestPlant(Plant& plant) {
+       int count;
+       int waitingTime;
+       std::cout << "Cate " << plant.getName() << " vrei sa plantezi?\n";
+       std::cin >> count;
+       if (count >= 1) {
+            waitingTime = count * plant.getGrowTime();
+            std:: cout << "Ai plantat " << count << " "  << plant.getName() << " ! Trebuie sa astepti "
+                            << waitingTime << " secunde ca sa poti sa le culegi!\n";
+            sleep(waitingTime);
+            std:: cout << "Felicitari, ai cules " << count << " " << plant.getName() << "!\n";
+       }
+    };
 };
 
 class Machine {
@@ -97,6 +107,8 @@ public:
 class Silo {
     std::vector<Plant> Plants;
 };
+
+
 // class Barn {
 //     std::vector<Plant> ResultedGood;
 // };
@@ -104,11 +116,11 @@ class Silo {
 
 
 int main() {
-    Animal Chicken("Kitchen", 20, 1, 20, "Aripioare picante"),
-           Cow("Cow", 25, 5, 60, "Brinza"),
-           Pig("Pig", 35, 10, 90, "Sorici"),
-           Sheep("Sheep", 40, 25, 360, "Ciubotele"),
-           Goat("Goat", 70, 38, 480, "Baby Messi");
+    Animal Chicken("Kitchen", 20, 1, 2, "Aripioare picante"),
+           Cow("Cow", 25, 5, 5, "Brinza"),
+           Pig("Pig", 35, 10, 7, "Sorici"),
+           Sheep("Sheep", 40, 25, 12, "Ciubotele"),
+           Goat("Goat", 70, 38, 15, "Baby Messi");
     Plant Wheat("Wheat", 2, 1, 2),
           Corn("Corn", 5, 3, 5),
           Bean("Soybeans", 10, 5, 20),
@@ -119,7 +131,8 @@ int main() {
             Oven("Oven", 150, 10, 60, 150),
             Grill("Grill", 200, 15, 120, 160);
 
-    Goat.feedAnimal(Goat);
+    // Chicken.feedAnimal(Chicken);
+    // Wheat.harvestPlant(Wheat);
 
 
     return 0;
