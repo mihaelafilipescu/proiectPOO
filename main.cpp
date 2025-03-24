@@ -2,8 +2,8 @@
 #include <utility>
 #include <vector>
 #include <string>
-#include <iomanip>
-#include <unistd.h>
+#include <chrono>
+#include <thread>
 
 class Animal {
     std::string Name;
@@ -215,10 +215,11 @@ public:
         std::cout << "Cate " << plant.getName() << " vrei sa plantezi?\n";
         std::cin >> count;
         if (count >= 1) {
-            const int waitingTime = count * plant.getGrowTime();
+            int growTimeInSeconds = plant.getGrowTime();
+            const std::chrono::seconds waitingTime(count * growTimeInSeconds);
             std:: cout << "Ai plantat " << count << " "  << plant.getName() << " ! Trebuie sa astepti "
                             << waitingTime << " secunde ca sa poti sa le culegi!\n";
-            sleep(waitingTime);
+            std::this_thread::sleep_for(waitingTime);
             std:: cout << "Felicitari, ai cules " << count << " " << plant.getName() << "!\n";
             silo.storePlants(plant.getName(), count);
         }
@@ -243,8 +244,10 @@ public:
             }
         }
         if (raspuns == "DA" || raspuns == "da" || raspuns == "Da") {
+            int feedTime = animal.getFeedTime();
+            const std::chrono::seconds waitingTime(feedTime);
             std::cout << "Trebuie sa astepti " << animal.getFeedTime() << " secunde ca " << animal.getName() << " sa fie hranit!\n";
-            sleep(animal.getFeedTime());
+            std::this_thread::sleep_for(waitingTime);;
             std::cout << "Felicitari, ai primit " << animal.getResultedGood() << " pentru ca ai hranit " << animal.getName() << "!\n";
             barn.storeItems(animal.getResultedGood(), 1);
         }
@@ -275,23 +278,10 @@ int main() {
             Oven("Oven", 150, 10, 60, 150),
             Grill("Grill", 200, 15, 120, 160);
 
-    // myFarm.harvestPlant(Wheat);
-    // myFarm.harvestPlant(Carrot);
-    // myFarm.harvestPlant(Wheat);
-    // myFarm.harvestPlant(Corn);
-    // myFarm.harvestPlant(Carrot);
-    // myFarm.harvestPlant(Bean);
-    // myFarm.feedAnimal(Chicken);
-    // myFarm.feedAnimal(Chicken);
-    // myFarm.feedAnimal(Cow);
-    // myFarm.feedAnimal(Pig);
-    // myFarm.feedAnimal(Pig);
-    // myFarm.feedAnimal(Chicken);
-    // myFarm.feedAnimal(Goat);
-    // myFarm.feedAnimal(Pig);
-    // myFarm.feedAnimal(Chicken);
+    myFarm.harvestPlant(Wheat);
+    myFarm.harvestPlant(Carrot);
+    myFarm.feedAnimal(Pig);
+    myFarm.feedAnimal(Chicken);
 
-
-
-    // return 0;
+    return 0;
 }
