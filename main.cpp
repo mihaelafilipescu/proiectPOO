@@ -95,7 +95,7 @@ class Silo {
 public:
     // Adaugă plante în Silo
     void storePlants( const std::string& plantName, int quantity) {
-        for (int i = 0 ; i < storedPlants.size(); ++i) {
+        for (size_t i = 0 ; i < storedPlants.size(); ++i) {
             if (storedPlants[i].first == plantName) {
                 storedPlants[i].second += quantity;
                 std::cout << quantity << " " << plantName << " adaugate in silo. \n";
@@ -107,7 +107,7 @@ public:
     }
     void siloContent() const {
         std::cout<< "In silo ai: \n";
-        for (int i = 0 ; i < storedPlants.size(); i++) {
+        for (size_t i = 0 ; i < storedPlants.size(); i++) {
             std::cout << "- " << storedPlants[i].first << " " << storedPlants[i].second << "\n";
         }
     }
