@@ -77,7 +77,7 @@ public:
         : storedPlants(stored_plants) {
     }
 
-    Silo();
+    Silo() {};
     ~Silo() = default;
     Silo(const Silo &other)
         : storedPlants(other.storedPlants) {
@@ -126,7 +126,7 @@ public:
         : storedItems(stored_items) {
     }
 
-    Barn();
+    Barn() {};
     ~Barn() = default;
     Barn(const Barn &other)
         : storedItems(other.storedItems) {
