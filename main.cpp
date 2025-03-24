@@ -56,8 +56,6 @@ public:
     }
 };
 
-class Silo;
-
 class Plant {
     std::string Name;
     int Cost;
@@ -72,21 +70,6 @@ public:
         LevelUnlock{LevelUnlock_}, GrowTime{GrowTime_}{};
 
     ~Plant() = default;
-
-   void harvestPlant(Plant& plant) {
-       int count;
-       int waitingTime;
-       std::cout << "Cate " << plant.getName() << " vrei sa plantezi?\n";
-       std::cin >> count;
-       if (count >= 1) {
-            waitingTime = count * plant.getGrowTime();
-            std:: cout << "Ai plantat " << count << " "  << plant.getName() << " ! Trebuie sa astepti "
-                            << waitingTime << " secunde ca sa poti sa le culegi!\n";
-            sleep(waitingTime);
-            std:: cout << "Felicitari, ai cules " << count << " " << plant.getName() << "!\n";
-            // storePlant( plant.getName, count )
-       }
-    };
 };
 
 class Machine {
@@ -107,24 +90,57 @@ public:
     ~Machine() = default;
 };
 
-// class Silo {
-//     std::vector<Plant> Plants;
-// public:
-//     // Adaugă plante în Silo
-//     void storePlant(const std::string& plantName, int quantity) {
-//         Plants[plantName] += quantity;
-//         std::cout << quantity << " " << plantName << " adăugate în silo.\n";
-//     }
-// };
+class Silo {
+    std::vector<std::pair<std::string, int>> storedPlants;
+public:
+    // Adaugă plante în Silo
+    void storePlants( const std::string& plantName, int quantity) {
+        for (int i = 0 ; i < storedPlants.size(); ++i) {
+            if (storedPlants[i].first == plantName) {
+                storedPlants[i].second += quantity;
+                std::cout << quantity << " " << plantName << " adaugate in silo. \n";
+                return;
+            }
+        }
+        storedPlants.emplace_back(plantName, quantity);
+        std::cout << quantity << " " << plantName << " adaugate in silo. \n";
+    }
+    void siloContent() const {
+        std::cout<< "In silo ai: \n";
+        for (int i = 0 ; i < storedPlants.size(); i++) {
+            std::cout << "- " << storedPlants[i].first << " " << storedPlants[i].second << "\n";
+        }
+    }
+};
 
 
 class Barn {
     std::vector<Plant> ResultedGood;
 };
 
+class Farm {
+    Silo silo;
+    Barn barn;
+public:
 
+    void harvestPlant(const Plant& plant) {
+        int count;
+        std::cout << "Cate " << plant.getName() << " vrei sa plantezi?\n";
+        std::cin >> count;
+        if (count >= 1) {
+            const int waitingTime = count * plant.getGrowTime();
+            std:: cout << "Ai plantat " << count << " "  << plant.getName() << " ! Trebuie sa astepti "
+                            << waitingTime << " secunde ca sa poti sa le culegi!\n";
+            sleep(waitingTime);
+            std:: cout << "Felicitari, ai cules " << count << " " << plant.getName() << "!\n";
+            silo.storePlants(plant.getName(), count);
+        }
+        silo.siloContent();
+    };
+};
 
 int main() {
+    Farm myFarm;
     Animal Chicken("Kitchen", 20, 1, 2, "Aripioare picante"),
            Cow("Cow", 25, 5, 5, "Brinza"),
            Pig("Pig", 35, 10, 7, "Sorici"),
@@ -140,8 +156,14 @@ int main() {
             Oven("Oven", 150, 10, 60, 150),
             Grill("Grill", 200, 15, 120, 160);
 
-    Goat.feedAnimal(Goat);
-    // Wheat.harvestPlant(Wheat);
+    // Goat.feedAnimal(Goat);
+    // myFarm.harvestPlant(Wheat);
+    // myFarm.harvestPlant(Carrot);
+    // myFarm.harvestPlant(Wheat);
+    // myFarm.harvestPlant(Corn);
+    // myFarm.harvestPlant(Carrot);
+
+
 
 
     return 0;
