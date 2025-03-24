@@ -27,33 +27,6 @@ public:
         LevelUnlock{other.LevelUnlock}, FeedTime{other.FeedTime}, ResultedGood{other.ResultedGood}{};
 
     ~Animal() = default;
-
-    void feedAnimal(Animal& animal) {
-        std::string raspuns;
-        std::string raspuns2;
-        std::cout<<"Vrei sa hranesti " << animal.getName() <<"? (da/nu)\n";
-        std::cin >> raspuns;
-        if (animal.getName() == "Goat"){
-            std:: cout<< "Cine este adevaratul " << animal.getName() << " ??????????????????????\n";
-            std:: cout<< "Messi sau Ronaldo? \n" ;
-            std:: cin >> raspuns2;
-            if (raspuns2 == "Ronaldo" || raspuns2 == "RONALDO"){
-                std::cout <<"Raspuns gresit! Nu poti hrani "<< animal.getName() << "\n";
-                raspuns = "nu";
-            }
-            else{
-                std:: cout<< "Raspuns corect!\n";
-            }
-        }
-        if (raspuns == "DA" || raspuns == "da" || raspuns == "Da") {
-            std::cout << "Trebuie sa astepti " << animal.getFeedTime() << " secunde ca " << animal.getName() << " sa fie hranit!\n";
-            sleep(animal.getFeedTime());
-            std::cout << "Felicitari, ai primit " << animal.getResultedGood() << " pentru ca ai hranit " << animal.getName() << "!\n";
-        }
-        else {
-            std::cout << animal.getName() << " nu a fost hranit!\n";
-        }
-    }
 };
 
 class Plant {
@@ -115,7 +88,26 @@ public:
 
 
 class Barn {
-    std::vector<Plant> ResultedGood;
+    std::vector<std::pair<std::string, int>> storedItems;
+public:
+    void storeItems( const std::string& itemName, int quantity) {
+        for (size_t i = 0 ; i < storedItems.size(); i++) {
+            if (storedItems[i].first == itemName) {
+                storedItems[i].second += quantity;
+                std::cout << quantity << " " << itemName << " adaugate in barn. \n";
+                return;
+            }
+        }
+        storedItems.emplace_back(itemName, quantity);
+        std::cout << quantity << " " << itemName << " adaugate in barn. \n";
+    }
+
+    void barnContent() const {
+        std::cout<< "In barn ai: \n";
+        for (size_t i = 0 ; i < storedItems.size(); i++) {
+            std::cout << "- " << storedItems[i].first << " " << storedItems[i].second << "\n";
+        }
+    }
 };
 
 class Farm {
@@ -137,6 +129,36 @@ public:
         }
         silo.siloContent();
     };
+
+    void feedAnimal(Animal& animal) {
+        std::string raspuns;
+        std::string raspuns2;
+        std::cout<<"Vrei sa hranesti " << animal.getName() <<"? (da/nu)\n";
+        std::cin >> raspuns;
+        if (animal.getName() == "Goat"){
+            std:: cout<< "Cine este adevaratul " << animal.getName() << " ??????????????????????\n";
+            std:: cout<< "Messi sau Ronaldo? \n" ;
+            std:: cin >> raspuns2;
+            if (raspuns2 == "Ronaldo" || raspuns2 == "RONALDO" || raspuns2 == "ronaldo"){
+                std::cout <<"Raspuns gresit! Nu poti hrani "<< animal.getName() << "\n";
+                raspuns = "nu";
+            }
+            else{
+                std:: cout<< "Raspuns corect!\n";
+            }
+        }
+        if (raspuns == "DA" || raspuns == "da" || raspuns == "Da") {
+            std::cout << "Trebuie sa astepti " << animal.getFeedTime() << " secunde ca " << animal.getName() << " sa fie hranit!\n";
+            sleep(animal.getFeedTime());
+            std::cout << "Felicitari, ai primit " << animal.getResultedGood() << " pentru ca ai hranit " << animal.getName() << "!\n";
+            barn.storeItems(animal.getResultedGood(), 1);
+        }
+        else {
+            std::cout << animal.getName() << " nu a fost hranit!\n";
+        }
+        barn.barnContent();
+    }
+
 };
 
 int main() {
@@ -148,23 +170,30 @@ int main() {
            Goat("Goat", 70, 38, 15, "Baby Messi");
     Plant Wheat("Wheat", 2, 1, 2),
           Corn("Corn", 5, 3, 5),
-          Bean("Soybeans", 10, 5, 20),
-          Carrot("Carrot", 12, 10, 10);
+          Bean("Soybeans", 10, 5, 10),
+          Carrot("Carrot", 12, 10, 7);
     Machine Bakery("Bakery", 50, 1, 5, 20),
             FeedMill("FeedMill", 50, 1, 10, 50),
             Popcorn("PopcornPot", 100, 5, 30, 100),
             Oven("Oven", 150, 10, 60, 150),
             Grill("Grill", 200, 15, 120, 160);
 
-    // Goat.feedAnimal(Goat);
     // myFarm.harvestPlant(Wheat);
     // myFarm.harvestPlant(Carrot);
     // myFarm.harvestPlant(Wheat);
     // myFarm.harvestPlant(Corn);
     // myFarm.harvestPlant(Carrot);
+    // myFarm.harvestPlant(Bean);
+    // myFarm.feedAnimal(Chicken);
+    // myFarm.feedAnimal(Chicken);
+    // myFarm.feedAnimal(Cow);
+    // myFarm.feedAnimal(Pig);
+    // myFarm.feedAnimal(Pig);
+    // myFarm.feedAnimal(Chicken);
+    // myFarm.feedAnimal(Goat);
+    // myFarm.feedAnimal(Pig);
+    // myFarm.feedAnimal(Chicken);
 
 
-
-
-    return 0;
+    // return 0;
 }
