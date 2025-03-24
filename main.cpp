@@ -11,6 +11,7 @@ class Animal {
     int LevelUnlock;
     int FeedTime;
     std::string ResultedGood;
+    int Fed;
 
 public:
     [[nodiscard]] const std::string& getName() const { return Name; };
@@ -19,16 +20,17 @@ public:
     // [[nodiscard]] int getLevelUnlock() const { return LevelUnlock; };
     [[nodiscard]] const std::string& getResultedGood() const { return ResultedGood; };
     // [[nodiscard]] int getFed() const { return Fed; };
-    explicit Animal(const int x) : Cost(0), LevelUnlock(0), FeedTime(0) {
+    // void setFed(const int Fed_) { Fed = Fed_; };
+    explicit Animal(const int x) : Cost(0), LevelUnlock(0), FeedTime(0), Fed{x} {
     };
     Animal( std::string  Name_, const int Cost_, const int LevelUnlock_, const int FeedTime_, std::string  ResultedGood_) : Name{std::move(
             Name_
         )}, Cost{Cost_},
-        LevelUnlock{LevelUnlock_}, FeedTime{FeedTime_}, ResultedGood{std::move(ResultedGood_)} {
+        LevelUnlock{LevelUnlock_}, FeedTime{FeedTime_}, ResultedGood{std::move(ResultedGood_)}, Fed(0) {
     };
     Animal(const Animal& other) : Name{other.Name}, Cost{other.Cost},
                                   LevelUnlock{other.LevelUnlock}, FeedTime{other.FeedTime},
-                                  ResultedGood{other.ResultedGood} {
+                                  ResultedGood{other.ResultedGood}, Fed(0) {
     };
 
     ~Animal() = default;
@@ -50,23 +52,23 @@ public:
     ~Plant() = default;
 };
 
-// class Machine {
-//     std::string Name;
-//     int Cost;
-//     int LevelUnlock;
-//     // int BuildTime;
-//     // int Maintenance;
-// public:
-//     [[nodiscard]] const std::string& getName() const { return Name; };
-//     [[nodiscard]] int getCost() const { return Cost; };
-//     [[nodiscard]] int getLevelUnlock() const { return LevelUnlock; };
-//     // [[nodiscard]] int getBuildTime() const { return BuildTime; };
-//     // [[nodiscard]] int getMaintenance() const { return Maintenance; };
-//     Machine(std::string  Name_, const int Cost_, const int LevelUnlock_, const int BuildTime_, const int Maintenance_) : Name{std::move(Name_)}, Cost{Cost_},
-//         LevelUnlock{LevelUnlock_}, BuildTime{BuildTime_}, Maintenance{Maintenance_}{};
-//
-//     ~Machine() = default;
-// };
+class Machine {
+    std::string Name;
+    int Cost;
+    int LevelUnlock;
+    int BuildTime;
+    int Maintenance;
+public:
+    [[nodiscard]] const std::string& getName() const { return Name; };
+    [[nodiscard]] int getCost() const { return Cost; };
+    [[nodiscard]] int getLevelUnlock() const { return LevelUnlock; };
+    // [[nodiscard]] int getBuildTime() const { return BuildTime; };
+    // [[nodiscard]] int getMaintenance() const { return Maintenance; };
+    Machine(std::string  Name_, const int Cost_, const int LevelUnlock_, const int BuildTime_, const int Maintenance_) : Name{std::move(Name_)}, Cost{Cost_},
+        LevelUnlock{LevelUnlock_}, BuildTime{BuildTime_}, Maintenance{Maintenance_}{};
+
+    ~Machine() = default;
+};
 
 class Silo {
     std::vector<std::pair<std::string, int>> storedPlants;
@@ -255,8 +257,8 @@ public:
         barn.barnContent();
     }
 
-    // static void Market() {
-    // };
+    static void Market() {
+    };
 
 };
 
@@ -273,26 +275,26 @@ int main() {
           Corn("Corn", 5, 3, 5),
           Bean("Soybeans", 10, 5, 10),
           Carrot("Carrot", 12, 10, 7);
-    // Machine Bakery("Bakery", 50, 1, 5, 20),
-    //         FeedMill("FeedMill", 50, 1, 10, 50),
-    //         Popcorn("PopcornPot", 100, 5, 30, 100),
-    //         Oven("Oven", 150, 10, 60, 150),
-    //         Grill("Grill", 200, 15, 120, 160);
+    Machine Bakery("Bakery", 50, 1, 5, 20),
+            FeedMill("FeedMill", 50, 1, 10, 50),
+            Popcorn("PopcornPot", 100, 5, 30, 100),
+            Oven("Oven", 150, 10, 60, 150),
+            Grill("Grill", 200, 15, 120, 160);
 
-    // myFarm.harvestPlant(Wheat);
-    // myFarm.harvestPlant(Corn);
-    // myFarm.harvestPlant(Wheat);
-    // myFarm.harvestPlant(Carrot);
-    // myFarm.harvestPlant(Bean);
-    // myFarm.harvestPlant(Wheat);
+    myFarm.harvestPlant(Wheat);
+    myFarm.harvestPlant(Corn);
+    myFarm.harvestPlant(Wheat);
+    myFarm.harvestPlant(Carrot);
+    myFarm.harvestPlant(Bean);
+    myFarm.harvestPlant(Wheat);
     myFarm.harvestPlant(Carrot);
     myFarm.feedAnimal(Pig);
-    // myFarm.feedAnimal(Chicken);
-    // myFarm.feedAnimal(Cow);
-    // myFarm.feedAnimal(Chicken);
-    // myFarm.feedAnimal(Pig);
-    // myFarm.feedAnimal(Goat);
-    // myFarm.feedAnimal(Pig);
+    myFarm.feedAnimal(Chicken);
+    myFarm.feedAnimal(Cow);
+    myFarm.feedAnimal(Chicken);
+    myFarm.feedAnimal(Pig);
+    myFarm.feedAnimal(Goat);
+    myFarm.feedAnimal(Pig);
 
 
     return 0;
