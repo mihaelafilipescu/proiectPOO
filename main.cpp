@@ -15,12 +15,12 @@ class Animal {
 
 public:
     [[nodiscard]] const std::string& getName() const { return Name; };
-    [[nodiscard]] int getCost() const { return Cost; };
+    // [[nodiscard]] int getCost() const { return Cost; };
     [[nodiscard]] int getFeedTime() const { return FeedTime; };
-    [[nodiscard]] int getLevelUnlock() const { return LevelUnlock; };
+    // [[nodiscard]] int getLevelUnlock() const { return LevelUnlock; };
     [[nodiscard]] const std::string& getResultedGood() const { return ResultedGood; };
-    [[nodiscard]] int getFed() const { return Fed; };
-    void setFed(const int Fed_) { Fed = Fed_; };
+    // [[nodiscard]] int getFed() const { return Fed; };
+    // void setFed(const int Fed_) { Fed = Fed_; };
     explicit Animal(const int x) : Cost(0), LevelUnlock(0), FeedTime(0), Fed{x} {
     };
     Animal( std::string  Name_, const int Cost_, const int LevelUnlock_, const int FeedTime_, std::string  ResultedGood_) : Name{std::move(
@@ -62,8 +62,8 @@ public:
     [[nodiscard]] const std::string& getName() const { return Name; };
     [[nodiscard]] int getCost() const { return Cost; };
     [[nodiscard]] int getLevelUnlock() const { return LevelUnlock; };
-    [[nodiscard]] int getBuildTime() const { return BuildTime; };
-    [[nodiscard]] int getMaintenance() const { return Maintenance; };
+    // [[nodiscard]] int getBuildTime() const { return BuildTime; };
+    // [[nodiscard]] int getMaintenance() const { return Maintenance; };
     Machine(std::string  Name_, const int Cost_, const int LevelUnlock_, const int BuildTime_, const int Maintenance_) : Name{std::move(Name_)}, Cost{Cost_},
         LevelUnlock{LevelUnlock_}, BuildTime{BuildTime_}, Maintenance{Maintenance_}{};
 
@@ -244,7 +244,7 @@ public:
             }
         }
         if (raspuns == "DA" || raspuns == "da" || raspuns == "Da") {
-            int feedTime = animal.getFeedTime();
+            const int feedTime = animal.getFeedTime();
             const std::chrono::seconds waitingTime(feedTime);
             std::cout << "Trebuie sa astepti " << animal.getFeedTime() << " secunde ca " << animal.getName() << " sa fie hranit!\n";
             std::this_thread::sleep_for(waitingTime);;
@@ -256,6 +256,9 @@ public:
         }
         barn.barnContent();
     }
+
+    static void Market() {
+    };
 
 };
 
@@ -279,9 +282,20 @@ int main() {
             Grill("Grill", 200, 15, 120, 160);
 
     myFarm.harvestPlant(Wheat);
+    myFarm.harvestPlant(Corn);
+    myFarm.harvestPlant(Wheat);
+    myFarm.harvestPlant(Carrot);
+    myFarm.harvestPlant(Bean);
+    myFarm.harvestPlant(Wheat);
     myFarm.harvestPlant(Carrot);
     myFarm.feedAnimal(Pig);
     myFarm.feedAnimal(Chicken);
+    myFarm.feedAnimal(Cow);
+    myFarm.feedAnimal(Chicken);
+    myFarm.feedAnimal(Pig);
+    myFarm.feedAnimal(Goat);
+    myFarm.feedAnimal(Pig);
+
 
     return 0;
 }
