@@ -66,6 +66,31 @@ public:
 class Silo {
     std::vector<std::pair<std::string, int>> storedPlants;
 public:
+    explicit Silo(const std::vector<std::pair<std::string, int>> &stored_plants)
+        : storedPlants(stored_plants) {
+    }
+
+    Silo();
+    ~Silo() = default;
+    Silo(const Silo &other)
+        : storedPlants(other.storedPlants) {
+    }
+    Silo(Silo &&other) noexcept
+        : storedPlants(std::move(other.storedPlants)) {
+    }
+    Silo & operator=(const Silo &other) {
+        if (this == &other)
+            return *this;
+        storedPlants = other.storedPlants;
+        return *this;
+    }
+    Silo & operator=(Silo &&other) noexcept {
+        if (this == &other)
+            return *this;
+        storedPlants = std::move(other.storedPlants);
+        return *this;
+    }
+
     // Adaugă plante în Silo
     void storePlants( const std::string& plantName, int quantity) {
         for (size_t i = 0 ; i < storedPlants.size(); ++i) {
@@ -90,6 +115,34 @@ public:
 class Barn {
     std::vector<std::pair<std::string, int>> storedItems;
 public:
+    explicit Barn(const std::vector<std::pair<std::string, int>> &stored_items)
+        : storedItems(stored_items) {
+    }
+
+    Barn();
+    ~Barn() = default;
+    Barn(const Barn &other)
+        : storedItems(other.storedItems) {
+    }
+
+    Barn(Barn &&other) noexcept
+        : storedItems(std::move(other.storedItems)) {
+    }
+
+    Barn & operator=(const Barn &other) {
+        if (this == &other)
+            return *this;
+        storedItems = other.storedItems;
+        return *this;
+    }
+
+    Barn & operator=(Barn &&other) noexcept {
+        if (this == &other)
+            return *this;
+        storedItems = std::move(other.storedItems);
+        return *this;
+    }
+
     void storeItems( const std::string& itemName, int quantity) {
         for (size_t i = 0 ; i < storedItems.size(); i++) {
             if (storedItems[i].first == itemName) {
@@ -114,6 +167,41 @@ class Farm {
     Silo silo;
     Barn barn;
 public:
+    Farm(const Silo &silo, const Barn &barn)
+        : silo(silo),
+          barn(barn) {
+    }
+    explicit Farm(const Silo &silo)
+        : silo(silo), barn() {
+    }
+    explicit Farm(const Barn &barn)
+        : silo(), barn(barn) {
+    }
+
+    Farm(const Farm &other)
+        : silo(other.silo),
+          barn(other.barn) {
+    }
+    Farm(Farm &&other) noexcept
+        : silo(std::move(other.silo)),
+          barn(std::move(other.barn)) {
+    }
+    Farm & operator=(const Farm &other) {
+        if (this == &other)
+            return *this;
+        silo = other.silo;
+        barn = other.barn;
+        return *this;
+    }
+    Farm & operator=(Farm &&other) noexcept {
+        if (this == &other)
+            return *this;
+        silo = std::move(other.silo);
+        barn = std::move(other.barn);
+        return *this;
+    }
+    ~Farm() = default;
+
 
     void harvestPlant(const Plant& plant) {
         int count;
@@ -162,9 +250,11 @@ public:
 };
 
 int main() {
-    Farm myFarm;
+    Silo mySilo;
+    Barn myBarn;
+    Farm myFarm(mySilo, myBarn);
     Animal Chicken("Kitchen", 20, 1, 2, "Aripioare picante"),
-           Cow("Cow", 25, 5, 5, "Brinza"),
+           Cow("Cow", 25, 5, 5, "Branza"),
            Pig("Pig", 35, 10, 7, "Sorici"),
            Sheep("Sheep", 40, 25, 12, "Ciubotele"),
            Goat("Goat", 70, 38, 15, "Baby Messi");
