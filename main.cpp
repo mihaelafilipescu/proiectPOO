@@ -281,20 +281,20 @@ int main() {
             Oven("Oven", 150, 10, 60, 150),
             Grill("Grill", 200, 15, 120, 160);
 
-    myFarm.harvestPlant(Wheat);
-    myFarm.harvestPlant(Corn);
-    myFarm.harvestPlant(Wheat);
+    // myFarm.harvestPlant(Wheat);
+    // myFarm.harvestPlant(Corn);
+    // myFarm.harvestPlant(Wheat);
+    // myFarm.harvestPlant(Carrot);
+    // myFarm.harvestPlant(Bean);
+    // myFarm.harvestPlant(Wheat);
     myFarm.harvestPlant(Carrot);
-    myFarm.harvestPlant(Bean);
-    myFarm.harvestPlant(Wheat);
-    myFarm.harvestPlant(Carrot);
     myFarm.feedAnimal(Pig);
-    myFarm.feedAnimal(Chicken);
-    myFarm.feedAnimal(Cow);
-    myFarm.feedAnimal(Chicken);
-    myFarm.feedAnimal(Pig);
-    myFarm.feedAnimal(Goat);
-    myFarm.feedAnimal(Pig);
+    // myFarm.feedAnimal(Chicken);
+    // myFarm.feedAnimal(Cow);
+    // myFarm.feedAnimal(Chicken);
+    // myFarm.feedAnimal(Pig);
+    // myFarm.feedAnimal(Goat);
+    // myFarm.feedAnimal(Pig);
 
 
     return 0;
