@@ -1,4 +1,5 @@
 #include <iostream>
+#include <utility>
 #include <vector>
 #include <string>
 #include <iomanip>
@@ -13,18 +14,24 @@ class Animal {
     int Fed;
 
 public:
-    const std::string& getName() const { return Name; };
-    int getCost() const { return Cost; };
-    int getFeedTime() const { return FeedTime; };
-    int getLevelUnlock() const { return LevelUnlock; };
-    const std::string& getResultedGood() const { return ResultedGood; };
-    int getFed() { return Fed; };
-    void setFed( int Fed_) { Fed = Fed_; };
-    Animal(const int x) : Fed{x} {};
-    Animal( const std::string& Name_, int Cost_, int LevelUnlock_, int FeedTime_, const std::string& ResultedGood_) : Name{Name_}, Cost{Cost_},
-        LevelUnlock{LevelUnlock_}, FeedTime{FeedTime_}, ResultedGood{ResultedGood_} {};
+    [[nodiscard]] const std::string& getName() const { return Name; };
+    [[nodiscard]] int getCost() const { return Cost; };
+    [[nodiscard]] int getFeedTime() const { return FeedTime; };
+    [[nodiscard]] int getLevelUnlock() const { return LevelUnlock; };
+    [[nodiscard]] const std::string& getResultedGood() const { return ResultedGood; };
+    [[nodiscard]] int getFed() const { return Fed; };
+    void setFed(const int Fed_) { Fed = Fed_; };
+    explicit Animal(const int x) : Cost(0), LevelUnlock(0), FeedTime(0), Fed{x} {
+    };
+    Animal( std::string  Name_, const int Cost_, const int LevelUnlock_, const int FeedTime_, std::string  ResultedGood_) : Name{std::move(
+            Name_
+        )}, Cost{Cost_},
+        LevelUnlock{LevelUnlock_}, FeedTime{FeedTime_}, ResultedGood{std::move(ResultedGood_)}, Fed(0) {
+    };
     Animal(const Animal& other) : Name{other.Name}, Cost{other.Cost},
-        LevelUnlock{other.LevelUnlock}, FeedTime{other.FeedTime}, ResultedGood{other.ResultedGood}{};
+                                  LevelUnlock{other.LevelUnlock}, FeedTime{other.FeedTime},
+                                  ResultedGood{other.ResultedGood}, Fed(0) {
+    };
 
     ~Animal() = default;
 };
@@ -35,11 +42,11 @@ class Plant {
     int LevelUnlock;
     int GrowTime;
 public:
-    const std::string& getName() const { return Name; };
-    int getCost() const { return Cost; };
-    int getLevelUnlock() const { return LevelUnlock; };
-    int getGrowTime() const { return GrowTime; };
-    Plant(const std::string& Name_, int Cost_, int LevelUnlock_, int GrowTime_): Name{Name_}, Cost{Cost_},
+    [[nodiscard]] const std::string& getName() const { return Name; };
+    [[nodiscard]] int getCost() const { return Cost; };
+    [[nodiscard]] int getLevelUnlock() const { return LevelUnlock; };
+    [[nodiscard]] int getGrowTime() const { return GrowTime; };
+    Plant(std::string  Name_, const int Cost_, const int LevelUnlock_, const int GrowTime_): Name{std::move(Name_)}, Cost{Cost_},
         LevelUnlock{LevelUnlock_}, GrowTime{GrowTime_}{};
 
     ~Plant() = default;
@@ -52,12 +59,12 @@ class Machine {
     int BuildTime;
     int Maintenance;
 public:
-    const std::string& getName() const { return Name; };
-    int getCost() const { return Cost; };
-    int getLevelUnlock() const { return LevelUnlock; };
-    int getBuildTime() const { return BuildTime; };
-    int getMaintenance() const { return Maintenance; };
-    Machine(const std::string& Name_, int Cost_, int LevelUnlock_, int BuildTime_, int Maintenance_) : Name{Name_}, Cost{Cost_},
+    [[nodiscard]] const std::string& getName() const { return Name; };
+    [[nodiscard]] int getCost() const { return Cost; };
+    [[nodiscard]] int getLevelUnlock() const { return LevelUnlock; };
+    [[nodiscard]] int getBuildTime() const { return BuildTime; };
+    [[nodiscard]] int getMaintenance() const { return Maintenance; };
+    Machine(std::string  Name_, const int Cost_, const int LevelUnlock_, const int BuildTime_, const int Maintenance_) : Name{std::move(Name_)}, Cost{Cost_},
         LevelUnlock{LevelUnlock_}, BuildTime{BuildTime_}, Maintenance{Maintenance_}{};
 
     ~Machine() = default;
@@ -105,8 +112,8 @@ public:
     }
     void siloContent() const {
         std::cout<< "In silo ai: \n";
-        for (size_t i = 0 ; i < storedPlants.size(); i++) {
-            std::cout << "- " << storedPlants[i].first << " " << storedPlants[i].second << "\n";
+        for (const auto & storedPlant : storedPlants) {
+            std::cout << "- " << storedPlant.first << " " << storedPlant.second << "\n";
         }
     }
 };
@@ -167,15 +174,15 @@ class Farm {
     Silo silo;
     Barn barn;
 public:
-    Farm(const Silo &silo, const Barn &barn)
-        : silo(silo),
-          barn(barn) {
+    Farm(Silo silo, Barn barn)
+        : silo(std::move(silo)),
+          barn(std::move(barn)) {
     }
-    explicit Farm(const Silo &silo)
-        : silo(silo), barn() {
+    explicit Farm(Silo silo)
+        : silo(std::move(silo)), barn() {
     }
-    explicit Farm(const Barn &barn)
-        : silo(), barn(barn) {
+    explicit Farm(Barn barn)
+        : silo(), barn(std::move(barn)) {
     }
 
     Farm(const Farm &other)
@@ -218,12 +225,12 @@ public:
         silo.siloContent();
     };
 
-    void feedAnimal(Animal& animal) {
+    void feedAnimal(const Animal& animal) {
         std::string raspuns;
-        std::string raspuns2;
         std::cout<<"Vrei sa hranesti " << animal.getName() <<"? (da/nu)\n";
         std::cin >> raspuns;
         if (animal.getName() == "Goat"){
+            std::string raspuns2;
             std:: cout<< "Cine este adevaratul " << animal.getName() << " ??????????????????????\n";
             std:: cout<< "Messi sau Ronaldo? \n" ;
             std:: cin >> raspuns2;
