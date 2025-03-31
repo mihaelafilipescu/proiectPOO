@@ -230,7 +230,7 @@ public:
         std::string raspuns;
         std::cout<<"Vrei sa hranesti " << animal.getName() <<"? (da/nu)\n";
         std::cin >> raspuns;
-        if (animal.getName() == "Goat"){
+        if (animal.getName() == "capre"){
             std::string raspuns2;
             std:: cout<< "Cine este adevaratul " << animal.getName() << " ??????????????????????\n";
             std:: cout<< "Messi sau Ronaldo? \n" ;
@@ -266,37 +266,72 @@ int main() {
     Silo mySilo;
     Barn myBarn;
     Farm myFarm(mySilo, myBarn);
-    Animal Chicken("Kitchen", 20, 1, 2, "Aripioare picante"),
-           Cow("Cow", 25, 5, 5, "Branza"),
-           Pig("Pig", 35, 10, 7, "Sorici"),
-           Sheep("Sheep", 40, 25, 12, "Ciubotele"),
-           Goat("Goat", 70, 38, 15, "Baby Messi");
-    Plant Wheat("Wheat", 2, 1, 2),
-          Corn("Corn", 5, 3, 5),
-          Bean("Soybeans", 10, 5, 10),
-          Carrot("Carrot", 12, 10, 7);
+    Animal Chicken("gaini", 20, 1, 2, "Aripioare picante"),
+           Cow("vaci", 25, 5, 5, "Branza"),
+           Pig("porci", 35, 10, 7, "Sorici"),
+           Sheep("oi", 40, 25, 12, "Ciubotele"),
+           Goat("capre", 70, 38, 15, "Baby Messi");
+    Plant Wheat("grau", 2, 1, 2),
+          Corn("porumb", 5, 3, 5),
+          Bean("fasole", 10, 5, 10),
+          Carrot("morcovi", 12, 10, 7);
     Machine Bakery("Bakery", 50, 1, 5, 20),
             FeedMill("FeedMill", 50, 1, 10, 50),
             Popcorn("PopcornPot", 100, 5, 30, 100),
             Oven("Oven", 150, 10, 60, 150),
             Grill("Grill", 200, 15, 120, 160);
+    std :: cout << "Bine ai venit in feram ta!\n" << "Ce doresti sa faci acum?\n";
+    std :: cout << "- sa plantez recolta (1) \n" << "- sa hranesc animalele (2) \n";
+    int ans1, ans2;
+    std :: string ans3;
+    while (true) {
+        std :: cin >> ans1;
+        switch (ans1) {
+            case 1:
+                std :: cout<< "Ce vrei sa plantezi?\n";
+                std :: cout << "- grau (1) \n" << "- porumb (2) \n" << "- fasole (3) \n" << "- morcovi (4) \n";
+                std :: cin >> ans2;
+                switch (ans2) {
+                    case 1:
+                        myFarm.harvestPlant(Wheat);
+                        break;
+                    case 2:
+                        myFarm.harvestPlant(Corn);
+                        break;
+                    case 3:
+                        myFarm.harvestPlant(Bean);
+                        break;
+                    case 4:
+                        myFarm.harvestPlant(Carrot);
+                        break;
 
-    myFarm.harvestPlant(Wheat);
-    myFarm.harvestPlant(Corn);
-    myFarm.harvestPlant(Wheat);
-    myFarm.harvestPlant(Carrot);
-    myFarm.harvestPlant(Bean);
-    myFarm.harvestPlant(Wheat);
-    myFarm.harvestPlant(Carrot);
-    myFarm.feedAnimal(Pig);
-    myFarm.feedAnimal(Chicken);
-    myFarm.feedAnimal(Cow);
-
-    myFarm.feedAnimal(Chicken);
-    myFarm.feedAnimal(Pig);
-    myFarm.feedAnimal(Goat);
-    myFarm.feedAnimal(Pig);
-
-
+                }break;
+            case 2:
+                std :: cout<< "Ce animale vrei sa hranesti?\n";
+                std :: cout << "- gaini (1) \n" << "- vaci (2) \n" << "- porci (3) \n" << "- oi (4) \n" << "- capre (5) \n";
+                std :: cin >> ans2;
+                switch (ans2) {
+                    case 1:
+                        myFarm.feedAnimal(Chicken);
+                        break;
+                    case 2:
+                        myFarm.feedAnimal(Cow);
+                        break;
+                    case 3:
+                        myFarm.feedAnimal(Pig);
+                        break;
+                    case 4:
+                        myFarm.feedAnimal(Sheep);
+                        break;
+                    case 5:
+                        myFarm.feedAnimal(Goat);
+                        break;
+                }break;
+        }
+        std :: cout << "Doresti sa continui jocul?\n";
+        std :: cin >> ans3;
+        if (ans3 == "Nu" || ans3 == "nu" || ans3 == "NU") break;
+        std:: cout << "Ce doresti sa faci acum?\n" << "- sa plantez recolta (1) \n" << "- sa hranesc animalele (2) \n";
+    }
     return 0;
 }
