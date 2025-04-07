@@ -200,10 +200,10 @@ public:
           barn(std::move(barn)) {
     }
     explicit Farm(Silo silo)
-        : silo(std::move(silo)), barn() {
+        : silo(std::move(silo)) {
     }
     explicit Farm(Barn barn)
-        : silo(), barn(std::move(barn)) {
+        : barn(std::move(barn)) {
     }
 
     Farm(const Farm &other)
