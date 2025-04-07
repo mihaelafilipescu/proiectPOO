@@ -87,8 +87,8 @@ public:
 
     ~Machine() = default;
 
-
 };
+
 
 class Silo {
     std::vector<std::pair<std::string, int>> storedPlants;
@@ -195,6 +195,12 @@ class Farm {
     Silo silo;
     Barn barn;
 public:
+    int getMoney () const { return money; }
+
+    explicit Farm(int money)
+        : money(money) {
+    }
+
     Farm(Silo silo, Barn barn)
         : silo(std::move(silo)),
           barn(std::move(barn)) {
@@ -285,6 +291,25 @@ public:
         barn.barnContent();
     }
 
+    void buyMachine(const Machine &machine, Farm &farm) {
+        std::cout << "Ai nevoie de " << machine.getCost() << " bani ca sa cumperi " << machine.getName() << ".\n";
+        std::cout << "Acum ai " << farm.getMoney() << " de bani!\n";
+        if (farm.getMoney() >= machine.getCost()) {
+            const int buildTime = machine.getBuildTime();
+            const std::chrono::seconds waitingTime(buildTime);
+            std:: cout<< "Ai cumparat " << machine.getName() << "!\n";
+            std:: cout<< "Trebuie sa astepti " << machine.getBuildTime() << "s pentru a se contrui!\n";
+            std::this_thread::sleep_for(waitingTime);;
+            money = farm.getMoney() - machine.getCost();
+            std::cout << "Ai ramas cu " << money << " de bani!\n";
+        }
+        else {
+            std:: cout<< "Nu ai destui bani pentru a cumpara " << machine.getName() << ".\n";
+            std:: cout<< "Tip! : planteaza produse si hraneste animale pentru a castiga bani!\n";
+        }
+
+    }
+
     // void Bakery (const Machine& bakery) {
     //     int raspuns;
     //     std :: cout << "Ce iti doresti sa prepari in bakery?\n";
@@ -298,6 +323,9 @@ public:
     // }
 
 };
+
+
+
 
 int main() {
     Silo mySilo;
@@ -318,8 +346,8 @@ int main() {
             Oven("Oven", 150, 10, 60, 150),
             Grill("Grill", 200, 15, 120, 160);
     std :: cout << "Bine ai venit in feram ta!\n" << "Ce doresti sa faci acum?\n";
-    std :: cout << "- sa plantez recolta (1) \n" << "- sa hranesc animalele (2) \n";
-    int ans1, ans2;
+    std :: cout << "- sa plantez recolta (1) \n" << "- sa hranesc animalele (2) \n" << "- sa construiesc o masinarie (3)\n";
+    int ans1, ans2, ans4;
     std :: string ans3;
     while (true) {
         std :: cin >> ans1;
@@ -364,11 +392,29 @@ int main() {
                         myFarm.feedAnimal(Goat);
                         break;
                 }break;
+            case 3:
+                std::cout << "Ce masinarie doresti sa-ti cumperi?\n";
+                std::cout << "- brutarie (1)\n" << "- cuptor (2)\n" << "- masina de popcorn (3)\n" << "- gratar (4)\n";
+                std :: cin >> ans4;
+                switch (ans4) {
+                    case 1:
+                        myFarm.buyMachine(Bakery, myFarm);
+                        break;
+                    case 2:
+                        myFarm.buyMachine(Oven, myFarm);
+                        break;
+                    case 3:
+                        myFarm.buyMachine(Popcorn, myFarm);
+                        break;
+                    case 4:
+                        myFarm.buyMachine(Grill, myFarm);
+                        break;
+                }break;
         }
         std :: cout << "Doresti sa continui jocul?\n";
         std :: cin >> ans3;
         if (ans3 == "Nu" || ans3 == "nu" || ans3 == "NU") break;
-        std:: cout << "Ce doresti sa faci acum?\n" << "- sa plantez recolta (1) \n" << "- sa hranesc animalele (2) \n";
+        std:: cout << "Ce doresti sa faci acum?\n" << "- sa plantez recolta (1) \n" << "- sa hranesc animalele (2) \n" << "- sa construiesc o masinarie (3)\n";
     }
     return 0;
 }
