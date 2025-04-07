@@ -428,7 +428,7 @@ int main() {
             case 4:
                 std::cout << "Ce masinarie doresti sa-ti repari?\n";
             std::cout << "- brutarie (1)\n" << "- cuptor (2)\n" << "- masina de popcorn (3)\n" << "- gratar (4)\n";
-            std :: cin >> ans4;
+            std :: cin >> ans5;
             switch (ans5) {
                 case 1:
                     myFarm.machineMaintenance(Bakery, myFarm);
