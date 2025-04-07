@@ -9,7 +9,6 @@
 class Animal {
     std::string Name;
     int Cost;
-    int LevelUnlock;
     int FeedTime;
     std::string ResultedGood;
     int resultedMoney;
@@ -18,10 +17,9 @@ public:
     [[nodiscard]] const std::string& getName() const { return Name; };
     [[nodiscard]] int getCost() const { return Cost; };
     [[nodiscard]] int getFeedTime() const { return FeedTime; };
-    [[nodiscard]] int getLevelUnlock() const { return LevelUnlock; };
     [[nodiscard]] const std::string& getResultedGood() const { return ResultedGood; };
     int getRestultedMoney() const { return resultedMoney; };
-    explicit Animal() : Cost(0), LevelUnlock(0), FeedTime(0), resultedMoney(0) {
+    explicit Animal() : Cost(0), FeedTime(0), resultedMoney(0) {
     };
     // Animal( std::string  Name_, const int Cost_, const int LevelUnlock_, const int FeedTime_, std::string  ResultedGood_) : Name{std::move(
     //         Name_
@@ -29,14 +27,13 @@ public:
     //     LevelUnlock{LevelUnlock_}, FeedTime{FeedTime_}, ResultedGood{std::move(ResultedGood_)} {
     // };
     Animal(const Animal& other) : Name{other.Name}, Cost{other.Cost},
-                                  LevelUnlock{other.LevelUnlock}, FeedTime{other.FeedTime},
+                                  FeedTime{other.FeedTime},
                                   ResultedGood{other.ResultedGood}, resultedMoney{other.resultedMoney} {
     };
 
-    Animal(const std::string &name, int cost, int level_unlock, int feed_time, const std::string &resulted_good, int restulted_money)
+    Animal(const std::string &name, int cost, int feed_time, const std::string &resulted_good, int restulted_money)
         : Name(name),
           Cost(cost),
-          LevelUnlock(level_unlock),
           FeedTime(feed_time),
           ResultedGood(resulted_good),
           resultedMoney(restulted_money) {
@@ -48,21 +45,18 @@ public:
 class Plant {
     std::string Name;
     int Cost;
-    int LevelUnlock;
     int GrowTime;
     int resultedMoney;
 public:
     [[nodiscard]] const std::string& getName() const { return Name; }
 
     [[nodiscard]] int getCost() const { return Cost; };
-    [[nodiscard]] int getLevelUnlock() const { return LevelUnlock; };
     [[nodiscard]] int getGrowTime() const { return GrowTime; };
     int getResultedMoney() const { return resultedMoney; };
-    explicit Plant () : Name(""), Cost(0), LevelUnlock(0), GrowTime(0), resultedMoney(0) {}
-    Plant(const std::string &name, int cost, int level_unlock, int grow_time, int resulted_money)
+    explicit Plant () : Name(""), Cost(0), GrowTime(0), resultedMoney(0) {}
+    Plant(const std::string &name, int cost, int grow_time, int resulted_money)
         : Name(name),
           Cost(cost),
-          LevelUnlock(level_unlock),
           GrowTime(grow_time),
           resultedMoney(resulted_money) {
     }
@@ -346,15 +340,15 @@ int main() {
     Silo mySilo;
     Barn myBarn;
     Farm myFarm(mySilo, myBarn);
-    Animal Chicken("gaini", 20, 1, 2, "Oua", 2),
-           Cow("vaci", 25, 5, 5, "Lapte", 5),
-           Pig("porci", 35, 10, 7, "Bacon", 12),
-           Sheep("oi", 40, 25, 12, "Lana", 15),
-           Goat("capre", 70, 38, 15, "Branza", 20);
-    Plant Wheat("grau", 2, 1, 2, 1),
-          Corn("porumb", 5, 3, 5, 3),
-          Bean("fasole", 10, 5, 10, 7),
-          Carrot("morcovi", 12, 10, 7, 10);
+    Animal Chicken("gaini", 20, 2, "Oua", 2),
+           Cow("vaci", 25,  5, "Lapte", 5),
+           Pig("porci", 35,  7, "Bacon", 12),
+           Sheep("oi", 40,  12, "Lana", 15),
+           Goat("capre", 70,  15, "Branza", 20);
+    Plant Wheat("grau", 2, 2, 1),
+          Corn("porumb", 5, 5, 3),
+          Bean("fasole", 10, 10, 7),
+          Carrot("morcovi", 12, 7, 10);
     Machine Bakery("Bakery", 50,  5, 400),
             FeedMill("FeedMill", 50,  10, 500),
             Popcorn("PopcornPot", 100,  30, 1000),
