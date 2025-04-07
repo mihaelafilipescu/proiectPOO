@@ -21,7 +21,7 @@ public:
     [[nodiscard]] int getLevelUnlock() const { return LevelUnlock; };
     [[nodiscard]] const std::string& getResultedGood() const { return ResultedGood; };
     int getRestultedMoney() const { return restultedMoney; };
-    explicit Animal(const int x) : Cost(0), LevelUnlock(0), FeedTime(0) {
+    explicit Animal() : Cost(0), LevelUnlock(0), FeedTime(0) {
     };
     Animal( std::string  Name_, const int Cost_, const int LevelUnlock_, const int FeedTime_, std::string  ResultedGood_) : Name{std::move(
             Name_
