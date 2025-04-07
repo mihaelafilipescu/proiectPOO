@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <chrono>
+#include <ostream>
 #include <thread>
 
 class Animal {
@@ -12,6 +13,7 @@ class Animal {
     int FeedTime;
     std::string ResultedGood;
     int Fed;
+    int restultedMoney;
 
 public:
     [[nodiscard]] const std::string& getName() const { return Name; };
@@ -21,6 +23,7 @@ public:
     [[nodiscard]] const std::string& getResultedGood() const { return ResultedGood; };
     [[nodiscard]] int getFed() const { return Fed; };
     void setFed(const int Fed_) { Fed = Fed_; };
+    int getRestultedMoney() const { return restultedMoney; };
     explicit Animal(const int x) : Cost(0), LevelUnlock(0), FeedTime(0), Fed{x} {
     };
     Animal( std::string  Name_, const int Cost_, const int LevelUnlock_, const int FeedTime_, std::string  ResultedGood_) : Name{std::move(
@@ -33,6 +36,15 @@ public:
                                   ResultedGood{other.ResultedGood}, Fed(0) {
     };
 
+    Animal(const std::string &name, int cost, int level_unlock, int feed_time, const std::string &resulted_good, int restulted_money)
+        : Name(name),
+          Cost(cost),
+          LevelUnlock(level_unlock),
+          FeedTime(feed_time),
+          ResultedGood(resulted_good),
+          restultedMoney(restulted_money) {
+    }
+
     ~Animal() = default;
 };
 
@@ -41,13 +53,24 @@ class Plant {
     int Cost;
     int LevelUnlock;
     int GrowTime;
+    int resultedMoney;
 public:
-    [[nodiscard]] const std::string& getName() const { return Name; };
+    [[nodiscard]] const std::string& getName() const { return Name; }
+
     [[nodiscard]] int getCost() const { return Cost; };
     [[nodiscard]] int getLevelUnlock() const { return LevelUnlock; };
     [[nodiscard]] int getGrowTime() const { return GrowTime; };
+    int getResultedMoney() const { return resultedMoney; };
     Plant(std::string  Name_, const int Cost_, const int LevelUnlock_, const int GrowTime_): Name{std::move(Name_)}, Cost{Cost_},
         LevelUnlock{LevelUnlock_}, GrowTime{GrowTime_}{};
+
+    Plant(const std::string &name, int cost, int level_unlock, int grow_time, int resulted_money)
+        : Name(name),
+          Cost(cost),
+          LevelUnlock(level_unlock),
+          GrowTime(grow_time),
+          resultedMoney(resulted_money) {
+    }
 
     ~Plant() = default;
 };
@@ -68,6 +91,8 @@ public:
         LevelUnlock{LevelUnlock_}, BuildTime{BuildTime_}, Maintenance{Maintenance_}{};
 
     ~Machine() = default;
+
+
 };
 
 class Silo {
@@ -78,6 +103,7 @@ public:
     }
 
     Silo() {};
+
     ~Silo() = default;
     Silo(const Silo &other)
         : storedPlants(other.storedPlants) {
@@ -117,7 +143,6 @@ public:
         }
     }
 };
-
 
 class Barn {
     std::vector<std::pair<std::string, int>> storedItems;
@@ -171,6 +196,7 @@ public:
 };
 
 class Farm {
+    int money = 50;
     Silo silo;
     Barn barn;
 public:
@@ -222,6 +248,8 @@ public:
             std::this_thread::sleep_for(waitingTime);
             std:: cout << "Felicitari, ai cules " << count << " " << plant.getName() << "!\n";
             silo.storePlants(plant.getName(), count);
+            money += (plant.getResultedMoney()*count);
+            std::cout << "Acum ai " << money << " de bani!\n";
         }
         silo.siloContent();
     };
@@ -232,6 +260,7 @@ public:
         std::cin >> raspuns;
         if (animal.getName() == "capre"){
             std::string raspuns2;
+
             std:: cout<< "Cine este adevaratul " << animal.getName() << " ??????????????????????\n";
             std:: cout<< "Messi sau Ronaldo? \n" ;
             std:: cin >> raspuns2;
@@ -250,6 +279,8 @@ public:
             std::this_thread::sleep_for(waitingTime);;
             std::cout << "Felicitari, ai primit " << animal.getResultedGood() << " pentru ca ai hranit " << animal.getName() << "!\n";
             barn.storeItems(animal.getResultedGood(), 1);
+            money += animal.getRestultedMoney();
+            std::cout << "Acum ai " << money << " de bani!\n";
         }
         else {
             std::cout << animal.getName() << " nu a fost hranit!\n";
@@ -257,8 +288,17 @@ public:
         barn.barnContent();
     }
 
-    static void Market() {
-    };
+    // void Bakery (const Machine& bakery) {
+    //     int raspuns;
+    //     std :: cout << "Ce iti doresti sa prepari in bakery?\n";
+    //     std :: cout << "- paine (1)\n" << "- mamaliga (2)\n" << "- briose cu zmeura (3)\n" << "- briose cu mure (4)\n";
+    //     switch (raspuns) {
+    //         case 1:
+    //         case 2:
+    //         case 3:
+    //         case 4:
+    //     }
+    // }
 
 };
 
@@ -266,15 +306,15 @@ int main() {
     Silo mySilo;
     Barn myBarn;
     Farm myFarm(mySilo, myBarn);
-    Animal Chicken("gaini", 20, 1, 2, "Aripioare picante"),
-           Cow("vaci", 25, 5, 5, "Branza"),
-           Pig("porci", 35, 10, 7, "Sorici"),
-           Sheep("oi", 40, 25, 12, "Ciubotele"),
-           Goat("capre", 70, 38, 15, "Baby Messi");
-    Plant Wheat("grau", 2, 1, 2),
-          Corn("porumb", 5, 3, 5),
-          Bean("fasole", 10, 5, 10),
-          Carrot("morcovi", 12, 10, 7);
+    Animal Chicken("gaini", 20, 1, 2, "Oua", 2),
+           Cow("vaci", 25, 5, 5, "Lapte", 5),
+           Pig("porci", 35, 10, 7, "Bacon", 12),
+           Sheep("oi", 40, 25, 12, "Lana", 15),
+           Goat("capre", 70, 38, 15, "Branza", 20);
+    Plant Wheat("grau", 2, 1, 2, 1),
+          Corn("porumb", 5, 3, 5, 3),
+          Bean("fasole", 10, 5, 10, 7),
+          Carrot("morcovi", 12, 10, 7, 10);
     Machine Bakery("Bakery", 50, 1, 5, 20),
             FeedMill("FeedMill", 50, 1, 10, 50),
             Popcorn("PopcornPot", 100, 5, 30, 100),
@@ -335,3 +375,5 @@ int main() {
     }
     return 0;
 }
+
+
