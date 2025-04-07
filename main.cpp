@@ -12,7 +12,7 @@ class Animal {
     int LevelUnlock;
     int FeedTime;
     std::string ResultedGood;
-    int restultedMoney;
+    int resultedMoney;
 
 public:
     [[nodiscard]] const std::string& getName() const { return Name; };
@@ -20,8 +20,8 @@ public:
     [[nodiscard]] int getFeedTime() const { return FeedTime; };
     [[nodiscard]] int getLevelUnlock() const { return LevelUnlock; };
     [[nodiscard]] const std::string& getResultedGood() const { return ResultedGood; };
-    int getRestultedMoney() const { return restultedMoney; };
-    explicit Animal() : Cost(0), LevelUnlock(0), FeedTime(0) {
+    int getRestultedMoney() const { return resultedMoney; };
+    explicit Animal() : Cost(0), LevelUnlock(0), FeedTime(0), resultedMoney(0) {
     };
     Animal( std::string  Name_, const int Cost_, const int LevelUnlock_, const int FeedTime_, std::string  ResultedGood_) : Name{std::move(
             Name_
@@ -30,7 +30,7 @@ public:
     };
     Animal(const Animal& other) : Name{other.Name}, Cost{other.Cost},
                                   LevelUnlock{other.LevelUnlock}, FeedTime{other.FeedTime},
-                                  ResultedGood{other.ResultedGood} {
+                                  ResultedGood{other.ResultedGood}, resultedMoney{other.resultedMoney} {
     };
 
     Animal(const std::string &name, int cost, int level_unlock, int feed_time, const std::string &resulted_good, int restulted_money)
@@ -39,7 +39,7 @@ public:
           LevelUnlock(level_unlock),
           FeedTime(feed_time),
           ResultedGood(resulted_good),
-          restultedMoney(restulted_money) {
+          resultedMoney(restulted_money) {
     }
 
     ~Animal() = default;
@@ -58,9 +58,7 @@ public:
     [[nodiscard]] int getLevelUnlock() const { return LevelUnlock; };
     [[nodiscard]] int getGrowTime() const { return GrowTime; };
     int getResultedMoney() const { return resultedMoney; };
-    Plant(std::string  Name_, const int Cost_, const int LevelUnlock_, const int GrowTime_): Name{std::move(Name_)}, Cost{Cost_},
-        LevelUnlock{LevelUnlock_}, GrowTime{GrowTime_}{};
-
+    explicit Plant () : Name(""), Cost(0), LevelUnlock(0), GrowTime(0), resultedMoney(0) {}
     Plant(const std::string &name, int cost, int level_unlock, int grow_time, int resulted_money)
         : Name(name),
           Cost(cost),
@@ -221,6 +219,7 @@ public:
             return *this;
         silo = other.silo;
         barn = other.barn;
+        money = other.money;
         return *this;
     }
     Farm & operator=(Farm &&other) noexcept {
@@ -228,6 +227,7 @@ public:
             return *this;
         silo = std::move(other.silo);
         barn = std::move(other.barn);
+        money = std::move(other.money);
         return *this;
     }
     ~Farm() = default;
