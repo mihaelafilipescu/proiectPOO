@@ -12,7 +12,6 @@ class Animal {
     int LevelUnlock;
     int FeedTime;
     std::string ResultedGood;
-    int Fed;
     int restultedMoney;
 
 public:
@@ -21,19 +20,17 @@ public:
     [[nodiscard]] int getFeedTime() const { return FeedTime; };
     [[nodiscard]] int getLevelUnlock() const { return LevelUnlock; };
     [[nodiscard]] const std::string& getResultedGood() const { return ResultedGood; };
-    [[nodiscard]] int getFed() const { return Fed; };
-    void setFed(const int Fed_) { Fed = Fed_; };
     int getRestultedMoney() const { return restultedMoney; };
-    explicit Animal(const int x) : Cost(0), LevelUnlock(0), FeedTime(0), Fed{x} {
+    explicit Animal(const int x) : Cost(0), LevelUnlock(0), FeedTime(0) {
     };
     Animal( std::string  Name_, const int Cost_, const int LevelUnlock_, const int FeedTime_, std::string  ResultedGood_) : Name{std::move(
             Name_
         )}, Cost{Cost_},
-        LevelUnlock{LevelUnlock_}, FeedTime{FeedTime_}, ResultedGood{std::move(ResultedGood_)}, Fed(0) {
+        LevelUnlock{LevelUnlock_}, FeedTime{FeedTime_}, ResultedGood{std::move(ResultedGood_)} {
     };
     Animal(const Animal& other) : Name{other.Name}, Cost{other.Cost},
                                   LevelUnlock{other.LevelUnlock}, FeedTime{other.FeedTime},
-                                  ResultedGood{other.ResultedGood}, Fed(0) {
+                                  ResultedGood{other.ResultedGood} {
     };
 
     Animal(const std::string &name, int cost, int level_unlock, int feed_time, const std::string &resulted_good, int restulted_money)
