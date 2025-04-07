@@ -23,11 +23,11 @@ public:
     int getRestultedMoney() const { return resultedMoney; };
     explicit Animal() : Cost(0), LevelUnlock(0), FeedTime(0), resultedMoney(0) {
     };
-    Animal( std::string  Name_, const int Cost_, const int LevelUnlock_, const int FeedTime_, std::string  ResultedGood_) : Name{std::move(
-            Name_
-        )}, Cost{Cost_},
-        LevelUnlock{LevelUnlock_}, FeedTime{FeedTime_}, ResultedGood{std::move(ResultedGood_)} {
-    };
+    // Animal( std::string  Name_, const int Cost_, const int LevelUnlock_, const int FeedTime_, std::string  ResultedGood_) : Name{std::move(
+    //         Name_
+    //     )}, Cost{Cost_},
+    //     LevelUnlock{LevelUnlock_}, FeedTime{FeedTime_}, ResultedGood{std::move(ResultedGood_)} {
+    // };
     Animal(const Animal& other) : Name{other.Name}, Cost{other.Cost},
                                   LevelUnlock{other.LevelUnlock}, FeedTime{other.FeedTime},
                                   ResultedGood{other.ResultedGood}, resultedMoney{other.resultedMoney} {
@@ -79,9 +79,9 @@ class Machine {
 public:
     [[nodiscard]] const std::string& getName() const { return Name; };
     [[nodiscard]] int getCost() const { return Cost; };
-    [[nodiscard]] int getLevelUnlock() const { return LevelUnlock; };
+    // [[nodiscard]] int getLevelUnlock() const { return LevelUnlock; };
     [[nodiscard]] int getBuildTime() const { return BuildTime; };
-    [[nodiscard]] int getMaintenance() const { return Maintenance; };
+    // [[nodiscard]] int getMaintenance() const { return Maintenance; };
     Machine(std::string  Name_, const int Cost_, const int LevelUnlock_, const int BuildTime_, const int Maintenance_) : Name{std::move(Name_)}, Cost{Cost_},
         LevelUnlock{LevelUnlock_}, BuildTime{BuildTime_}, Maintenance{Maintenance_}{};
 
@@ -291,7 +291,7 @@ public:
         barn.barnContent();
     }
 
-    void buyMachine(const Machine &machine, Farm &farm) {
+    void buyMachine(const Machine &machine, const Farm &farm) {
         std::cout << "Ai nevoie de " << machine.getCost() << " bani ca sa cumperi " << machine.getName() << ".\n";
         std::cout << "Acum ai " << farm.getMoney() << " de bani!\n";
         if (farm.getMoney() >= machine.getCost()) {
