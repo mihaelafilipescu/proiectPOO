@@ -271,6 +271,7 @@ public:
         os << "- " << farm.money << " bani \n";
         os << "- " << farm.silo << "\n";
         os << "- " << farm.barn << "\n";
+        return os;
     }
 
 
