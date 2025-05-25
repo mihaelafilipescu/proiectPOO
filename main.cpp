@@ -4,15 +4,20 @@
 #include <string>
 #include <chrono>
 #include <ostream>
-// #include "ext/indicators.hpp"
+#include <random>
+#include "ext/indicators (1).hpp"
 // #include "ext/progress_bar.hpp"
 // #include "ext/cursor_control.hpp"
+// #include "ext/cursor_movement (1).hpp"
 #include <thread>
 
 
 // class progressBar {
 // public:
 //     using namespace indicators;
+//
+//     // Hide cursor
+//     show_console_cursor(false);
 //
 //     indicators::ProgressBar bar{
 //         indicators::option::BarWidth{50},
@@ -21,8 +26,8 @@
 //         indicators::option::Lead{"█"},
 //         indicators::option::Remainder{"-"},
 //         indicators::option::End{"]"},
-//         indicators::option::PrefixText{"Training Gaze Network 👀"},
-//         indicators::option::ForegroundColor{indicators::Color::yellow},
+//         indicators::option::PrefixText{"Mai asteapta doar.. 👀"},
+//         indicators::option::ForegroundColor{indicators::Color::green},
 //         indicators::option::ShowElapsedTime{true},
 //         indicators::option::ShowRemainingTime{true},
 //         indicators::option::FontStyles{std::vector<indicators::FontStyle>{indicators::FontStyle::bold}}
@@ -35,39 +40,56 @@
 //         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 //     }
 //
+//     // Show cursor
+//     show_console_cursor(true);
+//
 // };
-
+//
 
 class Animal {
     std::string Name;
     int Cost;
     int FeedTime;
-    std::string ResultedGood;
-    int resultedMoney;
 
 public:
+    Animal();
     [[nodiscard]] const std::string& getName() const { return Name; };
     [[nodiscard]] int getCost() const { return Cost; };
     [[nodiscard]] int getFeedTime() const { return FeedTime; };
-    [[nodiscard]] const std::string& getResultedGood() const { return ResultedGood; };
-    int getRestultedMoney() const { return resultedMoney; };
-    explicit Animal() : Cost(0), FeedTime(0), resultedMoney(0) {
-    };
 
     Animal(const Animal& other) : Name{other.Name}, Cost{other.Cost},
-                                  FeedTime{other.FeedTime},
-                                  ResultedGood{other.ResultedGood}, resultedMoney{other.resultedMoney} {
+                                  FeedTime{other.FeedTime} {
     };
-
-    Animal(const std::string &name, int cost, int feed_time, const std::string &resulted_good, int restulted_money)
+    Animal& operator=(const Animal& other) = default;
+    Animal(const std::string &name, const int cost, const int feed_time)
         : Name(name),
           Cost(cost),
-          FeedTime(feed_time),
-          ResultedGood(resulted_good),
-          resultedMoney(restulted_money) {
+          FeedTime(feed_time){
     }
 
     ~Animal() = default;
+};
+
+class Pets : Animal {
+    bool pet;
+public:
+    Pets();
+    [[nodiscard]] bool getPet() const { return pet; };
+    Pets ( const std::string& name, const int cost, const int feed_time, bool pet) : Animal(name, cost, feed_time), pet(pet) {};
+    ~Pets() = default;
+};
+
+class NonPets : public Animal {
+    std::string ResultedGood;
+    int resultedMoney;
+public:
+    NonPets();
+    [[nodiscard]] const std::string& getResultedGood() const { return ResultedGood; };
+    int getRestultedMoney() const { return resultedMoney; };
+    NonPets( const std::string& name, const int cost, const int feed_time, const std::string& resulted_good, const int resulted_money) :
+        Animal(name, cost, feed_time),
+        ResultedGood(resulted_good), resultedMoney(resulted_money) {}
+    ~NonPets() = default;
 };
 
 class Plant {
@@ -75,21 +97,52 @@ class Plant {
     int Cost;
     int GrowTime;
     int resultedMoney;
+protected:
+    int baseGetGrowTime() const { return GrowTime; };
 public:
     [[nodiscard]] const std::string& getName() const { return Name; }
-
     [[nodiscard]] int getCost() const { return Cost; };
-    [[nodiscard]] int getGrowTime() const { return GrowTime; };
-    int getResultedMoney() const { return resultedMoney; };
+    [[nodiscard]] virtual int getGrowTime() const { return GrowTime; };
+    [[nodiscard]] int getResultedMoney() const { return resultedMoney; };
     explicit Plant () : Name(""), Cost(0), GrowTime(0), resultedMoney(0) {}
-    Plant(const std::string &name, int cost, int grow_time, int resulted_money)
+    Plant(const std::string& name, const int cost, const int grow_time, const int resulted_money)
         : Name(name),
           Cost(cost),
           GrowTime(grow_time),
           resultedMoney(resulted_money) {
     }
+    virtual ~Plant() = default;
+};
 
-    ~Plant() = default;
+class Weed : Plant {
+    bool isPoisonous;
+    int RemoveCost;
+public:
+    Weed();
+    [[nodiscard]] int getRemoveCost() const { return RemoveCost; };
+    [[nodiscard]] bool getIsPoisonous() const { if (isPoisonous) return true ; return false; }
+    Weed (const std::string& name, const int cost, const int grow_time, const int resulted_money, const bool poisonous, const int removeCost) :
+        Plant(name, cost, grow_time, resulted_money), isPoisonous(poisonous), RemoveCost(removeCost) {};
+    ~Weed() = default;
+
+    [[nodiscard]] int getGrowTime() const override {
+        int extraTime = 0;
+
+        // Simulăm apariția buruienilor în 40% din cazuri
+        static std::random_device rd;
+        static std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(0, 99);
+
+        if (dis(gen) < 40) {
+            // Între 5 și 15 secunde în plus
+            std::uniform_int_distribution<> weedDelay(1, 10);
+            extraTime = weedDelay(gen);
+            std::cout << "[!] Buruienile au apărut! Timpul de recoltare a fost prelungit cu "
+                      << extraTime << " secunde.\n";
+        }
+        return baseGetGrowTime() + extraTime;
+    }
+
 };
 
 class Machine {
@@ -98,6 +151,7 @@ class Machine {
     int BuildTime;
     int Maintenance;
 public:
+    Machine();
     [[nodiscard]] const std::string& getName() const { return Name; };
     [[nodiscard]] int getCost() const { return Cost; };
     [[nodiscard]] int getBuildTime() const { return BuildTime; };
@@ -108,7 +162,6 @@ public:
     ~Machine() = default;
 
 };
-
 
 class Silo {
     std::vector<std::pair<std::string, int>> storedPlants;
@@ -294,7 +347,7 @@ public:
         silo.siloContent();
     };
 
-    void feedAnimal(const Animal& animal) {
+    void feedAnimal(const NonPets& animal) {
         std::string raspuns;
         std::cout<<"Vrei sa hranesti " << animal.getName() <<"? (da/nu)\n";
         std::cin >> raspuns;
@@ -374,20 +427,24 @@ int main() {
     Barn myBarn;
     Farm myFarm(mySilo, myBarn);
     // std :: cout<< myFarm;
-    Animal Chicken("gainile", 20, 2, "Oua", 2),
+    NonPets Chicken("gainile", 20, 2, "Oua", 2),
            Cow("vacile", 25,  5, "Lapte", 5),
            Pig("porcii", 35,  7, "Bacon", 12),
            Sheep("oile", 40,  12, "Lana", 15),
            Goat("caprele", 70,  15, "Branza", 20);
+    Pets Dog("caine", 100, 4, true),
+         Cat("pisica", 150, 7, true);
     Plant Wheat("grau", 2, 2, 1),
           Corn("porumb", 5, 5, 3),
           Bean("fasole", 10, 10, 7),
           Carrot("morcovi", 12, 7, 10);
-    Machine Bakery("Bakery", 50,  5, 400),
-            FeedMill("FeedMill", 50,  10, 500),
-            Popcorn("PopcornPot", 100,  30, 1000),
-            Oven("Oven", 150,  60, 1500),
-            Grill("Grill", 200,  120, 1600);
+    Weed  Volbura/*e greu de scos, sufoca plantele*/, Dracila/*pot sa o manance oile, nu e otravitoare,
+            cred ca e relativ usor de scos*/, Mohor/*e greu de scos ca seamana cu graul, e buruiana*/  ;
+    Machine Bakery("Bakery", 50, 20, 400),
+            FeedMill("FeedMill", 50, 25, 500),
+            Popcorn("PopcornPot", 100, 30, 1000),
+            Oven("Oven", 150, 35, 1500),
+            Grill("Grill", 200, 40, 1600);
     std :: cout << "Bine ai venit in ferma ta!\n" << "Ce doresti sa faci acum?\n";
     std :: cout << "- sa plantez recolta (1) \n" << "- sa hranesc animalele (2) \n" << "- sa construiesc o masinarie (3)\n" << "- sa repar o masinarie (4)\n";
     int ans1, ans2, ans4, ans5;
