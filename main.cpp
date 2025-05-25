@@ -159,7 +159,7 @@ public:
         Plant(name, cost, grow_time, resulted_money), isPoisonous(poisonous), RemoveCost(removeCost) {};
     ~Weed() override = default;
 
-    [[nodiscard]] int getGrowTime() const override {
+    /*[[nodiscard]]*/ int getGrowTime() const override {
         int extraTime = 0;
 
         // Simulăm apariția buruienilor în 40% din cazuri
