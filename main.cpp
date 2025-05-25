@@ -74,7 +74,7 @@ class Pets : Animal {
     bool pet;
 public:
     Pets();
-    [[nodiscard]] bool getPet() const { return pet; };
+    // [[nodiscard]] bool getPet() const { return pet; };
     Pets ( const std::string& name, const int cost, const int feed_time, bool pet) : Animal(name, cost, feed_time), pet(pet) {};
     ~Pets() = default;
 };
@@ -91,6 +91,13 @@ public:
         ResultedGood(resulted_good), resultedMoney(resulted_money) {}
     ~NonPets() = default;
 };
+
+class Rabbit : Pets, NonPets {
+public:
+    Rabbit();
+    ~Rabbit() = default;
+};
+
 
 class Plant {
     std::string Name;
@@ -121,28 +128,28 @@ class Weed : Plant {
 public:
     Weed();
     // [[nodiscard]] int getRemoveCost() const { return RemoveCost; };
-    [[nodiscard]] bool getIsPoisonous() const { if (isPoisonous) return true ; return false; }
+    // [[nodiscard]] bool getIsPoisonous() const { if (isPoisonous) return true ; return false; }
     Weed (const std::string& name, const int cost, const int grow_time, const int resulted_money, const bool poisonous, const int removeCost) :
         Plant(name, cost, grow_time, resulted_money), isPoisonous(poisonous), RemoveCost(removeCost) {};
     ~Weed() override = default;
 
-    // [[nodiscard]] int getGrowTime() const override {
-    //     int extraTime = 0;
-    //
-    //     // Simulăm apariția buruienilor în 40% din cazuri
-    //     static std::random_device rd;
-    //     static std::mt19937 gen(rd());
-    //     std::uniform_int_distribution<> dis(0, 99);
-    //
-    //     if (dis(gen) < 40) {
-    //         // Între 5 și 15 secunde în plus
-    //         std::uniform_int_distribution<> weedDelay(1, 10);
-    //         extraTime = weedDelay(gen);
-    //         std::cout << "[!] Buruienile au apărut! Timpul de recoltare a fost prelungit cu "
-    //                   << extraTime << " secunde.\n";
-    //     }
-    //     return baseGetGrowTime() + extraTime;
-    // }
+    [[nodiscard]] int getGrowTime() const override {
+        int extraTime = 0;
+
+        // Simulăm apariția buruienilor în 40% din cazuri
+        static std::random_device rd;
+        static std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(0, 99);
+
+        if (dis(gen) < 40) {
+            // Între 5 și 15 secunde în plus
+            std::uniform_int_distribution<> weedDelay(1, 10);
+            extraTime = weedDelay(gen);
+            std::cout << "[!] Buruienile au apărut! Timpul de recoltare a fost prelungit cu "
+                      << extraTime << " secunde.\n";
+        }
+        return baseGetGrowTime() + extraTime;
+    }
 
 };
 
