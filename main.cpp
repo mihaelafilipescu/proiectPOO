@@ -79,6 +79,12 @@ public:
     Pets ( const std::string& name, const int cost, const int feed_time, bool pet) : Animal(name, cost, feed_time), pet(pet) {};
     explicit Pets( bool pet_) : pet(pet_) {};
     ~Pets() = default;
+
+    void mangaie() {
+        pet = true;
+        std::cout << "Ti-ai mangaiat animalul de companie!";
+    }
+
 };
 
 class NonPets : virtual public Animal {
