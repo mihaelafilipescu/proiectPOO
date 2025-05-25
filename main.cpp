@@ -112,7 +112,8 @@ public:
             std::cin >> opt;
 
             if (opt == 2) {
-                int gainedMoney = 15 + std::rand() % 21; // între 15 și 35
+                int gainedMoney; // între 15 și 35
+                gainedMoney = 15 + std::rand() % 21;
                 money += gainedMoney;
                 std::cout << "Ai prins iepurele si ai castigat " << gainedMoney << " bani!\n";
                 std::cout << "Banii actuali: " << money << "\n";
