@@ -70,16 +70,17 @@ public:
     ~Animal() = default;
 };
 
-class Pets : Animal {
+class Pets : virtual public Animal {
     bool pet;
 public:
     Pets();
     // [[nodiscard]] bool getPet() const { return pet; };
     Pets ( const std::string& name, const int cost, const int feed_time, bool pet) : Animal(name, cost, feed_time), pet(pet) {};
+    explicit Pets( bool pet_) : pet(pet_) {};
     ~Pets() = default;
 };
 
-class NonPets : public Animal {
+class NonPets : virtual public Animal {
     std::string ResultedGood;
     int resultedMoney;
 public:
@@ -89,13 +90,37 @@ public:
     NonPets( const std::string& name, const int cost, const int feed_time, const std::string& resulted_good, const int resulted_money) :
         Animal(name, cost, feed_time),
         ResultedGood(resulted_good), resultedMoney(resulted_money) {}
+    NonPets( const std::string& resulted_good, const int resulted_money) : ResultedGood(resulted_good), resultedMoney(resulted_money) {};
     ~NonPets() = default;
 };
 
-class Rabbit : Pets, NonPets {
+class Rabbit : public Pets, public NonPets {
 public:
-    Rabbit();
+    Rabbit() : Animal("", 0, 0), Pets(false), NonPets("", 0) {};
+    Rabbit( const std::string& name, const int cost, const int feed_time, bool pet, const std::string& resulted_good, const int resulted_money) :
+        Animal(name, cost, feed_time), Pets(pet), NonPets(resulted_good, resulted_money) {}
     ~Rabbit() = default;
+
+    static void rabbitInterference(int& money) {
+        std::srand(std::time(nullptr));
+        if (std::rand() % 2 == 0) {  // 50% șansă să apară un iepure
+            std::cout << "A aparut un iepure salbatic in timp ce hraneai animalele!\n";
+            std::cout << "Ce vrei sa faci cu el?\n";
+            std::cout << "1. Il mangai \n";
+            std::cout << "2. Il prinzi si il vinzi (obtii bani)\n";
+            int opt;
+            std::cin >> opt;
+
+            if (opt == 2) {
+                int gainedMoney = 15 + std::rand() % 21; // între 15 și 35
+                money += gainedMoney;
+                std::cout << "Ai prins iepurele si ai castigat " << gainedMoney << " bani!\n";
+                std::cout << "Banii actuali: " << money << "\n";
+            } else {
+                std::cout << "Ai mangaiat iepurele. Pentru ca ai fost dragut cu el, lumea este puutin mai buna acum! \n";
+            }
+        }
+    }
 };
 
 
@@ -142,10 +167,10 @@ public:
         std::uniform_int_distribution<> dis(0, 99);
 
         if (dis(gen) < 40) {
-            // Între 5 și 15 secunde în plus
+            // Între 5 și 10 secunde în plus
             std::uniform_int_distribution<> weedDelay(1, 10);
             extraTime = weedDelay(gen);
-            std::cout << "[!] Buruienile au apărut! Timpul de recoltare a fost prelungit cu "
+            std::cout << "Ups! Au aparut buruieni. Timpul de recoltare a fost prelungit cu "
                       << extraTime << " secunde.\n";
         }
         return baseGetGrowTime() + extraTime;
@@ -177,9 +202,7 @@ public:
     explicit Silo(const std::vector<std::pair<std::string, int>> &stored_plants)
         : storedPlants(stored_plants) {
     }
-
     Silo() {};
-
     ~Silo() = default;
     Silo(const Silo &other)
         : storedPlants(other.storedPlants) {
@@ -336,7 +359,7 @@ public:
     }
 
 
-    void harvestPlant(const Plant& plant) {
+    void harvestPlant(const Plant& plant, const Weed& weed) {
         int count;
         std::cout << "Cate kilograme de " << plant.getName() << " vrei sa plantezi?\n";
         std::cin >> count;
@@ -345,6 +368,7 @@ public:
             const std::chrono::seconds waitingTime(count * growTimeInSeconds);
             std:: cout << "Ai plantat " << count << " kg de "  << plant.getName() << "! Trebuie sa astepti "
                             << waitingTime << " secunde ca sa poti sa le culegi!\n";
+            weed.getGrowTime();
             std::this_thread::sleep_for(waitingTime);
             std:: cout << "Felicitari, ai cules " << count << " kg de " << plant.getName() << "!\n";
             silo.storePlants(plant.getName(), count);
@@ -355,13 +379,12 @@ public:
         silo.siloContent();
     };
 
-    void feedAnimal(const NonPets& animal) {
+    void feedAnimal(const NonPets& animal, const Rabbit& rabbit) {
         std::string raspuns;
         std::cout<<"Vrei sa hranesti " << animal.getName() <<"? (da/nu)\n";
         std::cin >> raspuns;
         if (animal.getName() == "capre"){
             std::string raspuns2;
-
             std:: cout<< "Cine este adevaratul " << animal.getName() << "??????????????????????\n";
             std:: cout<< "Messi sau Ronaldo? \n" ;
             std:: cin >> raspuns2;
@@ -377,6 +400,7 @@ public:
             const int feedTime = animal.getFeedTime();
             const std::chrono::seconds waitingTime(feedTime);
             std::cout << "Trebuie sa astepti " << animal.getFeedTime() << " secunde ca " << animal.getName() << " sa fie hranite!\n";
+            rabbit.rabbitInterference(money);
             std::this_thread::sleep_for(waitingTime);;
             std::cout << "Felicitari, ai primit " << animal.getResultedGood() << " pentru ca ai hranit " << animal.getName() << "!\n";
             barn.storeItems(animal.getResultedGood(), 1);
@@ -442,6 +466,7 @@ int main() {
            Goat("caprele", 70,  15, "Branza", 20);
     Pets Dog("caine", 100, 4, true),
          Cat("pisica", 150, 7, true);
+    Rabbit rabbit{};
     Plant Wheat("grau", 2, 2, 1),
           Corn("porumb", 5, 5, 3),
           Bean("fasole", 10, 10, 7),
@@ -467,16 +492,16 @@ int main() {
                 std :: cin >> ans2;
                 switch (ans2) {
                     case 1:
-                        myFarm.harvestPlant(Wheat);
+                        myFarm.harvestPlant(Wheat, Mohor);
                         break;
                     case 2:
-                        myFarm.harvestPlant(Corn);
+                        myFarm.harvestPlant(Corn, Volbura);
                         break;
                     case 3:
-                        myFarm.harvestPlant(Bean);
+                        myFarm.harvestPlant(Bean, Volbura);
                         break;
                     case 4:
-                        myFarm.harvestPlant(Carrot);
+                        myFarm.harvestPlant(Carrot, Volbura);
                         break;
 
                 }break;
@@ -486,19 +511,19 @@ int main() {
                 std :: cin >> ans2;
                 switch (ans2) {
                     case 1:
-                        myFarm.feedAnimal(Chicken);
+                        myFarm.feedAnimal(Chicken, rabbit);
                         break;
                     case 2:
-                        myFarm.feedAnimal(Cow);
+                        myFarm.feedAnimal(Cow, rabbit);
                         break;
                     case 3:
-                        myFarm.feedAnimal(Pig);
+                        myFarm.feedAnimal(Pig, rabbit);
                         break;
                     case 4:
-                        myFarm.feedAnimal(Sheep);
+                        myFarm.feedAnimal(Sheep, rabbit);
                         break;
                     case 5:
-                        myFarm.feedAnimal(Goat);
+                        myFarm.feedAnimal(Goat, rabbit);
                         break;
                 }break;
             case 3:
