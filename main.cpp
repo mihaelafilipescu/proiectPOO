@@ -98,7 +98,7 @@ class Plant {
     int GrowTime;
     int resultedMoney;
 protected:
-    int baseGetGrowTime() const { return GrowTime; };
+    [[nodiscard]] int baseGetGrowTime() const { return GrowTime; };
 public:
     [[nodiscard]] const std::string& getName() const { return Name; }
     [[nodiscard]] int getCost() const { return Cost; };
@@ -111,6 +111,7 @@ public:
           GrowTime(grow_time),
           resultedMoney(resulted_money) {
     }
+
     virtual ~Plant() = default;
 };
 
@@ -119,29 +120,29 @@ class Weed : Plant {
     int RemoveCost;
 public:
     Weed();
-    [[nodiscard]] int getRemoveCost() const { return RemoveCost; };
+    // [[nodiscard]] int getRemoveCost() const { return RemoveCost; };
     [[nodiscard]] bool getIsPoisonous() const { if (isPoisonous) return true ; return false; }
     Weed (const std::string& name, const int cost, const int grow_time, const int resulted_money, const bool poisonous, const int removeCost) :
         Plant(name, cost, grow_time, resulted_money), isPoisonous(poisonous), RemoveCost(removeCost) {};
-    ~Weed() = default;
+    ~Weed() override = default;
 
-    [[nodiscard]] int getGrowTime() const override {
-        int extraTime = 0;
-
-        // Simulăm apariția buruienilor în 40% din cazuri
-        static std::random_device rd;
-        static std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(0, 99);
-
-        if (dis(gen) < 40) {
-            // Între 5 și 15 secunde în plus
-            std::uniform_int_distribution<> weedDelay(1, 10);
-            extraTime = weedDelay(gen);
-            std::cout << "[!] Buruienile au apărut! Timpul de recoltare a fost prelungit cu "
-                      << extraTime << " secunde.\n";
-        }
-        return baseGetGrowTime() + extraTime;
-    }
+    // [[nodiscard]] int getGrowTime() const override {
+    //     int extraTime = 0;
+    //
+    //     // Simulăm apariția buruienilor în 40% din cazuri
+    //     static std::random_device rd;
+    //     static std::mt19937 gen(rd());
+    //     std::uniform_int_distribution<> dis(0, 99);
+    //
+    //     if (dis(gen) < 40) {
+    //         // Între 5 și 15 secunde în plus
+    //         std::uniform_int_distribution<> weedDelay(1, 10);
+    //         extraTime = weedDelay(gen);
+    //         std::cout << "[!] Buruienile au apărut! Timpul de recoltare a fost prelungit cu "
+    //                   << extraTime << " secunde.\n";
+    //     }
+    //     return baseGetGrowTime() + extraTime;
+    // }
 
 };
 
@@ -438,8 +439,9 @@ int main() {
           Corn("porumb", 5, 5, 3),
           Bean("fasole", 10, 10, 7),
           Carrot("morcovi", 12, 7, 10);
-    Weed  Volbura/*e greu de scos, sufoca plantele*/, Dracila/*pot sa o manance oile, nu e otravitoare,
-            cred ca e relativ usor de scos*/, Mohor/*e greu de scos ca seamana cu graul, e buruiana*/  ;
+    Weed Volbura("volbura", 0 , 0, 0, true, 15) /*e greu de scos, sufoca plantele*/,
+         Dracila("dracila", 0 , 0, 0, false, 5)/*pot sa o manance oile, nu e otravitoare,cred ca e relativ usor de scos*/,
+         Mohor("mohor", 0 , 0, 0, true, 20)/*e greu de scos ca seamana cu graul, e buruiana*/ ;
     Machine Bakery("Bakery", 50, 20, 400),
             FeedMill("FeedMill", 50, 25, 500),
             Popcorn("PopcornPot", 100, 30, 1000),
