@@ -73,7 +73,8 @@ public:
 class Pets : virtual public Animal {
     bool pet;
 public:
-    Pets();
+    Pets() : Animal("", 0, 0), pet(false) {
+    };
     // [[nodiscard]] bool getPet() const { return pet; };
     Pets ( const std::string& name, const int cost, const int feed_time, bool pet) : Animal(name, cost, feed_time), pet(pet) {};
     explicit Pets( bool pet_) : pet(pet_) {};
@@ -84,7 +85,7 @@ class NonPets : virtual public Animal {
     std::string ResultedGood;
     int resultedMoney;
 public:
-    NonPets();
+    NonPets() : Animal("", 0, 0), ResultedGood(""), resultedMoney(0) {};
     [[nodiscard]] const std::string& getResultedGood() const { return ResultedGood; };
     int getRestultedMoney() const { return resultedMoney; };
     NonPets( const std::string& name, const int cost, const int feed_time, const std::string& resulted_good, const int resulted_money) :
