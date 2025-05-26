@@ -18,7 +18,7 @@ public:
     Pets ( const std::string& name, const int cost, const int feed_time, bool pet);
     explicit Pets( bool pet_);
 
-    void interact() const override;
+    void interact(int& money) const override;
 };
 
 

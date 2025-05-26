@@ -17,6 +17,5 @@ NonPets::NonPets(const std::string &name, const int cost, const int feed_time, c
 
 NonPets::NonPets(const std::string &resulted_good, const int resulted_money): ResultedGood(resulted_good), resultedMoney(resulted_money) {}
 
-void NonPets::interact() const {
-    std::cout << "Ai hrănit " << getName() << " și ai obținut " << getResultedGood() << ".\n";
+void NonPets::interact(int& money) const {
 }

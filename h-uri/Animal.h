@@ -23,7 +23,7 @@ public:
     Animal(const std::string &name = "", const int cost = 0, const int feed_time = 0);
 
     virtual ~Animal();
-    virtual void interact() const = 0;
+    virtual void interact(int &money) const = 0;
 };
 
 
