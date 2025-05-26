@@ -1,0 +1,28 @@
+//
+// Created by sim on 5/26/2025.
+//
+
+#ifndef WEED_H
+#define WEED_H
+#include <random>
+#include <iostream>
+#include "Plant.h"
+
+
+class Weed : public Plant {
+    bool isPoisonous;
+    int RemoveCost;
+public:
+    Weed();
+    // [[nodiscard]] int getRemoveCost() const { return RemoveCost; };
+    // [[nodiscard]] bool getIsPoisonous() const { if (isPoisonous) return true ; return false; }
+    Weed (const std::string& name, const int cost, const int grow_time, const int resulted_money, const bool poisonous, const int removeCost);
+    ~Weed() override;
+
+    int getGrowTime() const override;
+};
+
+
+
+
+#endif //WEED_H

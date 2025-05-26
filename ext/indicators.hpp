@@ -2074,8 +2074,9 @@ public:
     {
       std::lock_guard<std::mutex> lock{mutex_};
       const auto type = get_value<details::ProgressBarOption::progress_type>();
-      if (type == ProgressType::incremental)
-        progress_ += 1;
+      if (type == ProgressType::incremental) {
+          progress_ += 1;
+      }
       else
         progress_ -= 1;
     }

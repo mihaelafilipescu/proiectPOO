@@ -51,6 +51,26 @@ include(cmake/CopyHelper.cmake)
 add_executable(${MAIN_EXECUTABLE_NAME}
     main.cpp
     generated/src/Helper.cpp
+        cpp-uri/Animal.cpp
+        h-uri/Animal.h
+        cpp-uri/Pets.cpp
+        h-uri/Pets.h
+        cpp-uri/NonPets.cpp
+        h-uri/NonPets.h
+        cpp-uri/Rabbit.cpp
+        h-uri/Rabbit.h
+        cpp-uri/Plant.cpp
+        h-uri/Plant.h
+        cpp-uri/Weed.cpp
+        h-uri/Weed.h
+        cpp-uri/Machine.cpp
+        h-uri/Machine.h
+        cpp-uri/Silo.cpp
+        h-uri/Silo.h
+        cpp-uri/Barn.cpp
+        h-uri/Barn.h
+        cpp-uri/Farm.cpp
+        h-uri/Farm.h
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )
@@ -68,7 +88,10 @@ set_compiler_flags(RUN_SANITIZERS TRUE TARGET_NAMES ${MAIN_EXECUTABLE_NAME})
 #target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE ext/progress_bar.hpp)
 #target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE ext/cursor_control.hpp)
 #target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE ext/cursor_movement (1).hpp)
-target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE ext/indicators (1).hpp)
+target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE ext)
+
+target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE cpp-uri)
+target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE h-uri)
 
 
 
