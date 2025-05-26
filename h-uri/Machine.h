@@ -15,9 +15,9 @@ class Machine {
 public:
     Machine();
     [[nodiscard]] const std::string& getName() const;
-    [[nodiscard]] int getCost() const;;
-    [[nodiscard]] int getBuildTime() const;;
-    [[nodiscard]] int getMaintenance() const;;
+    [[nodiscard]] int getCost() const;
+    [[nodiscard]] int getBuildTime() const;
+    [[nodiscard]] int getMaintenance() const;
     Machine(std::string  Name_, const int Cost_,  const int BuildTime_, const int Maintenance_);
 
     ~Machine();
