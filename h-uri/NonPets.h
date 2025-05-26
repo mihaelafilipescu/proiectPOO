@@ -19,7 +19,7 @@ public:
 
     NonPets( const std::string& resulted_good, const int resulted_money);
 
-    void interact(int& money) const override;
+    // void interact(int& money) const override;
 };
 
 

@@ -11,7 +11,7 @@ Pets::Pets(const std::string &name, const int cost, const int feed_time, bool pe
 
 Pets::Pets(bool pet_): pet(pet_) {}
 
-void Pets::interact(int& money) const {
-    // pet = 1;
-    std::cout << "Ai mângâiat animalul de companie " << getName() << "!\n";
-}
+// void Pets::interact(int& money) const {
+//     // pet = 1;
+//     std::cout << "Ai mângâiat animalul de companie " << getName() << "!\n";
+// }

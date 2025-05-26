@@ -32,6 +32,6 @@ void Rabbit::rabbitInterference(int &money) {
     }
 }
 
-void Rabbit::interact() const {
-    std::cout << "Ai hrănit " << getName() << " și ai obținut " << getResultedGood() << ".\n";
-}
+// void Rabbit::interact() const {
+//     std::cout << "Ai hrănit " << getName() << " și ai obținut " << getResultedGood() << ".\n";
+// }
