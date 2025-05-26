@@ -72,7 +72,7 @@ public:
 
 class Pets : virtual public Animal {
     bool pet;
-    bool fed;
+    // bool fed;
 public:
     Pets() : Animal("", 0, 0), pet(false) {
     };
