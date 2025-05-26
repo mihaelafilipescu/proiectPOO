@@ -17,7 +17,7 @@ public:
 
     void rabbitInterference(int& money);
 
-    // void interact() const override;
+    void interact() const override;
 };
 
 

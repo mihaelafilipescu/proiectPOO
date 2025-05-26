@@ -2,7 +2,7 @@
 // Created by sim on 5/26/2025.
 //
 
-#include "../h-uri/Rabbit.h"
+#include "Rabbit.h"
 
 Rabbit::Rabbit(): Animal("", 0, 0), Pets(false), NonPets("", 0) {}
 
@@ -32,6 +32,6 @@ void Rabbit::rabbitInterference(int &money) {
     }
 }
 
-// void Rabbit::interact() const {
-//     std::cout << "Ai hrănit " << getName() << " și ai obținut " << getResultedGood() << ".\n";
-// }
+void Rabbit::interact() const {
+    std::cout << "Ai hrănit " << getName() << " și ai obținut " << getResultedGood() << ".\n";
+}

@@ -38,8 +38,8 @@ int main() {
             Oven("Oven", 150, 35, 1500),
             Grill("Grill", 200, 40, 1600);
     std :: cout << "Bine ai venit in ferma ta!\n" << "Ce doresti sa faci acum?\n";
-    std :: cout << "- sa plantez recolta (1) \n" << "- sa hranesc animalele (2) \n" << "- sa construiesc o masinarie (3)\n" << "- sa repar o masinarie (4)\n";
-    int ans1, ans2, ans4, ans5;
+    std :: cout << "- sa plantez recolta (1) \n" << "- sa hranesc animalele (2) \n" << "- sa ma joc cu animalele (3)\n" <<  "- sa construiesc o masinarie (4)\n" << "- sa repar o masinarie (5)\n";
+    int ans1, ans2, ans4, ans5, ans6;
     std :: string ans3;
     while (true) {
         std :: cin >> ans1;
@@ -85,6 +85,28 @@ int main() {
                         break;
                 }break;
             case 3:
+                std::cout<< "Cu ce animal vrei sa te joci?\n";
+                std::cout<< "- caine (1)\n" << "- gaina (2)\n" << "- vaca (3)\n" << "- pisica (4)\n" << "- porcul (5)\n";
+                std :: cin >> ans6;
+                switch (ans6) {
+                    case 1:
+                        Dog.interact();
+                        break;
+                    case 2:
+                        Chicken.interact();
+                        break;
+                    case 3:
+                        Cow.interact();
+                        break;
+                    case 4:
+                        Cat.interact();
+                        break;
+                    case 5:
+                        Pig.interact();
+                        break;
+                }
+                break;
+            case 4:
                 std::cout << "Ce masinarie doresti sa-ti cumperi?\n";
                 std::cout << "- brutarie (1)\n" << "- cuptor (2)\n" << "- masina de popcorn (3)\n" << "- gratar (4)\n";
                 std :: cin >> ans4;
@@ -102,7 +124,7 @@ int main() {
                         myFarm.buyMachine(Grill, myFarm);
                         break;
                 }break;
-            case 4:
+            case 5:
                 std::cout << "Ce masinarie doresti sa repari?\n";
             std::cout << "- brutarie (1)\n" << "- cuptor (2)\n" << "- masina de popcorn (3)\n" << "- gratar (4)\n";
             std :: cin >> ans5;
@@ -124,7 +146,7 @@ int main() {
         std :: cout << "Doresti sa continui jocul?\n";
         std :: cin >> ans3;
         if (ans3 == "Nu" || ans3 == "nu" || ans3 == "NU") break;
-        std:: cout << "Ce doresti sa faci acum?\n" << "- sa plantez recolta (1) \n" << "- sa hranesc animalele (2) \n" << "- sa construiesc o masinarie (3)\n" << "- sa repar o masinarie (4)\n";
+        std:: cout << "Ce doresti sa faci acum?\n" << "- sa plantez recolta (1) \n" << "- sa hranesc animalele (2) \n" << "- sa ma joc cu animalele (3)\n" << "- sa construiesc o masinarie (4)\n" << "- sa repar o masinarie (5)\n";
     }
     return 0;
 }

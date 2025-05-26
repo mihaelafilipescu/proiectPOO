@@ -2,7 +2,7 @@
 // Created by sim on 5/26/2025.
 //
 #include <iostream>
-#include "../h-uri/NonPets.h"
+#include "NonPets.h"
 
 NonPets::NonPets(): Animal("", 0, 0), ResultedGood(""), resultedMoney(0) {}
 
@@ -17,5 +17,7 @@ NonPets::NonPets(const std::string &name, const int cost, const int feed_time, c
 
 NonPets::NonPets(const std::string &resulted_good, const int resulted_money): ResultedGood(resulted_good), resultedMoney(resulted_money) {}
 
-// void NonPets::interact(int& money) const {
-// }
+void NonPets::interact() const {
+    std::cout << "ATENTIE: Nu incerca sa mangai " << getName() << "! Acestea nu sunt animale de companie si poate fi periculos!\n";
+    std::cout << "Pastreaza distanta pentru siguranta ta!\n";
+}
