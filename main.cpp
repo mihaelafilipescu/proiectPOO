@@ -26,7 +26,7 @@
 //         indicators::option::Lead{"█"},
 //         indicators::option::Remainder{"-"},
 //         indicators::option::End{"]"},
-//         indicators::option::PrefixText{"Mai asteapta doar.. 👀"},
+//         indicators::option::PrefixText{"Mai asteapta doar. 👀"},
 //         indicators::option::ForegroundColor{indicators::Color::green},
 //         indicators::option::ShowElapsedTime{true},
 //         indicators::option::ShowRemainingTime{true},
@@ -67,18 +67,18 @@ public:
           FeedTime(feed_time){
     }
 
-    ~Animal() = default;
+    virtual ~Animal() = default;
 };
 
 class Pets : virtual public Animal {
     bool pet;
+    bool fed;
 public:
     Pets() : Animal("", 0, 0), pet(false) {
     };
     // [[nodiscard]] bool getPet() const { return pet; };
     Pets ( const std::string& name, const int cost, const int feed_time, bool pet) : Animal(name, cost, feed_time), pet(pet) {};
     explicit Pets( bool pet_) : pet(pet_) {};
-    ~Pets() = default;
 
     void mangaie() {
         pet = true;
@@ -98,7 +98,6 @@ public:
         Animal(name, cost, feed_time),
         ResultedGood(resulted_good), resultedMoney(resulted_money) {}
     NonPets( const std::string& resulted_good, const int resulted_money) : ResultedGood(resulted_good), resultedMoney(resulted_money) {};
-    ~NonPets() = default;
 };
 
 class Rabbit : public Pets, public NonPets {
@@ -106,7 +105,6 @@ public:
     Rabbit() : Animal("", 0, 0), Pets(false), NonPets("", 0) {};
     Rabbit( const std::string& name, const int cost, const int feed_time, bool pet, const std::string& resulted_good, const int resulted_money) :
         Animal(name, cost, feed_time), Pets(pet), NonPets(resulted_good, resulted_money) {}
-    ~Rabbit() = default;
 
     static void rabbitInterference(int& money) {
         std::srand(std::time(nullptr));
