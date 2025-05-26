@@ -52,7 +52,7 @@ class Animal {
     int FeedTime;
 
 public:
-    Animal();
+    Animal() = default;
     [[nodiscard]] const std::string& getName() const { return Name; };
     [[nodiscard]] int getCost() const { return Cost; };
     [[nodiscard]] int getFeedTime() const { return FeedTime; };
