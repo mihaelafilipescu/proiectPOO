@@ -76,6 +76,6 @@ void Barn::removeItem(const std::string& itemName, int quantity) {
     }
 }
 
-const std::vector<std::pair<std::string, int>>& Barn::getStoredItems() const {
-    return storedItems;
-}
+// const std::vector<std::pair<std::string, int>>& Barn::getStoredItems() const {
+//     return storedItems;
+// }

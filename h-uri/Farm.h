@@ -66,7 +66,7 @@ public:
 
     Silo& getSilo() { return silo; }
     Barn& getBarn() { return barn; }
-    const std::vector<Machine>& getOwnedMachines() const { return ownedMachines; }
+    // const std::vector<Machine>& getOwnedMachines() const { return ownedMachines; }
 };
 
 #endif //FARM_H

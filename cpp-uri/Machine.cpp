@@ -13,8 +13,6 @@ int Machine::getCost() const { return Cost; }
 
 int Machine::getBuildTime() const { return BuildTime; }
 
-int Machine::getMaintenance() const { return Maintenance; }
-
 bool Machine::getIsWorking() const { return isWorking; }
 
 const std::vector<Recipe>& Machine::getRecipes() const { return recipes; }

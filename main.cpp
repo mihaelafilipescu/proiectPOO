@@ -42,7 +42,7 @@ int main() {
     std :: cout << "Bine ai venit in ferma ta!\n" << "Ce doresti sa faci acum?\n";
     std :: cout << "- sa plantez recolta (1) \n" << "- sa hranesc animalele (2) \n" << "- sa interactionez cu animalele (3)\n" <<  "- sa construiesc o masinarie (4)\n" << "- sa produc cu masinile (5)\n" << "- sa vad starea fermei (6)\n";
 
-    int ans1, ans2, ans3, ans4, ans5;
+    int ans1, ans2, ans3, ans4;
     std :: string continueGame;
 
     while (true) {

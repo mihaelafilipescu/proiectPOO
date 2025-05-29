@@ -84,6 +84,6 @@ void Silo::removeItem(const std::string& itemName, int quantity) {
     }
 }
 
-const std::vector<std::pair<std::string, int>>& Silo::getStoredPlants() const {
-    return storedPlants;
-}
+// const std::vector<std::pair<std::string, int>>& Silo::getStoredPlants() const {
+//     return storedPlants;
+// }
