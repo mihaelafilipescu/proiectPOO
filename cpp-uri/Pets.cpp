@@ -16,7 +16,7 @@ void Pets::interact() const {
     if (petted) {
         std::cout << "Animalul de companie " << getName() << " a fost deja mangaiat si este multumit!\n";
     } else {
-        std::cout << "Ai mangaiat animalul de companie " << getName() << "! Pare fericit și relaxat!\n";
+        std::cout << "Ai mangaiat animalul de companie " << getName() << "! Pare fericit si relaxat!\n";
 
         // Modificăm statusul petted la true
         const_cast<Pets*>(this)->petted = true;
@@ -28,8 +28,4 @@ void Pets::interact() const {
             std::cout << "Animalutul tau a uitat ca l-ai mangaiat. Poti sa il mangai din nou!\n";
         }).detach();
     }
-}
-
-void Pets::resetPettedStatus() const {
-    const_cast<Pets*>(this)->petted = false;
 }
