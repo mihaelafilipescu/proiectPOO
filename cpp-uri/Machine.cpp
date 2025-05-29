@@ -4,8 +4,8 @@
 
 #include "../h-uri/Machine.h"
 
-// Machine::Machine() {
-// }
+Machine::Machine() {
+}
 
 const std::string & Machine::getName() const { return Name; }
 
