@@ -12,13 +12,10 @@ class Plant;
 
 
 class Weed : public Plant {
-    bool isPoisonous;
     int RemoveCost;
 public:
     Weed();
-    // [[nodiscard]] int getRemoveCost() const { return RemoveCost; };
-    // [[nodiscard]] bool getIsPoisonous() const { if (isPoisonous) return true ; return false; }
-    Weed (const std::string& name, const int cost, const int grow_time, const int resulted_money, const bool poisonous, const int removeCost);
+    Weed (const std::string& name, const int cost, const int grow_time, const int resulted_money, const int removeCost);
     ~Weed() override;
 
     int getGrowTime() const override;

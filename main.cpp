@@ -30,9 +30,9 @@ int main() {
           Corn("porumb", 5, 5, 3),
           Bean("fasole", 10, 10, 7),
           Carrot("morcovi", 12, 7, 10);
-    Weed Volbura("volbura", 0 , 0, 0, true, 15) /*e greu de scos, sufoca plantele*/,
-         Dracila("dracila", 0 , 0, 0, false, 5)/*pot sa o manance oile, nu e otravitoare,cred ca e relativ usor de scos*/,
-         Mohor("mohor", 0 , 0, 0, true, 20)/*e greu de scos ca seamana cu graul, e buruiana*/ ;
+    Weed Volbura("volbura", 0 , 0, 0, 15) /*e greu de scos, sufoca plantele*/,
+         Dracila("dracila", 0 , 0, 0, 5)/*pot sa o manance oile, nu e otravitoare,cred ca e relativ usor de scos*/,
+         Mohor("mohor", 0 , 0, 0, 20)/*e greu de scos ca seamana cu graul, e buruiana*/ ;
     Machine Bakery("Bakery", 50, 20, 400),
             FeedMill("FeedMill", 50, 25, 500),
             Popcorn("PopcornPot", 100, 30, 1000),
