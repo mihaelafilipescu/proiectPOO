@@ -45,7 +45,7 @@ public:
 
     void harvestPlant(const Plant& plant, const Weed& weed);
 
-    void feedAnimal(NonPets& animal,  Rabbit& rabbit);
+    void feedAnimal(const NonPets& animal,  Rabbit& rabbit);
 
     void buyMachine(const Machine &machine, const Farm &farm);
 

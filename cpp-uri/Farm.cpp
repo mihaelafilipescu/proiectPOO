@@ -96,7 +96,7 @@ void Farm::harvestPlant(const Plant &plant, const Weed &weed) {
     silo.siloContent();
 }
 
-void Farm::feedAnimal(NonPets &animal, Rabbit &rabbit) {
+void Farm::feedAnimal(const NonPets &animal, Rabbit &rabbit) {
     std::string raspuns;
     std::cout<<"Vrei sa hranesti " << animal.getName() <<"? (da/nu)\n";
     std::cin >> raspuns;

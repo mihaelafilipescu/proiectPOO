@@ -16,7 +16,7 @@ class Pets : virtual public Animal {
     bool petted;
 public:
     Pets();
-    [[nodiscard]] bool isPetted() const { return petted; }
+    // [[nodiscard]] bool isPetted() const { return petted; }
     Pets(const std::string& name, const int cost, const int feed_time, bool petted = false);
     explicit Pets(bool petted_);
 
