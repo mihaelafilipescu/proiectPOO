@@ -24,11 +24,15 @@ Farm::Farm(Barn barn): barn(std::move(barn)) {
 }
 
 Farm::Farm(const Farm &other): silo(other.silo),
-                               barn(other.barn) {
+                               barn(other.barn),
+                               money(other.money),
+                               ownedMachines(other.ownedMachines) {
 }
 
 Farm::Farm(Farm &&other) noexcept: silo(std::move(other.silo)),
-                                   barn(std::move(other.barn)) {
+                                   barn(std::move(other.barn)),
+                                   money(other.money),
+                                   ownedMachines(std::move(other.ownedMachines)) {
 }
 
 Farm & Farm::operator=(const Farm &other) {
@@ -37,6 +41,7 @@ Farm & Farm::operator=(const Farm &other) {
     silo = other.silo;
     barn = other.barn;
     money = other.money;
+    ownedMachines = other.ownedMachines;
     return *this;
 }
 
@@ -46,6 +51,7 @@ Farm & Farm::operator=(Farm &&other) noexcept {
     silo = std::move(other.silo);
     barn = std::move(other.barn);
     money = std::move(other.money);
+    ownedMachines = std::move(other.ownedMachines);
     return *this;
 }
 
@@ -72,7 +78,6 @@ void Farm::progressBar(int timp) {
             break;
         std::this_thread::sleep_for(std::chrono::milliseconds(timp*10));
     }
-
 }
 
 void Farm::harvestPlant(const Plant &plant, const Weed &weed) {
@@ -138,7 +143,9 @@ void Farm::buyMachine(const Machine &machine, const Farm &farm) {
         const int buildTime = machine.getBuildTime();
         const std::chrono::seconds waitingTime(buildTime);
         std:: cout<< "Trebuie sa astepti " << machine.getBuildTime() << "s pentru a se contrui!\n";
-        std::this_thread::sleep_for(waitingTime);;
+        progressBar(buildTime);
+        // std::this_thread::sleep_for(waitingTime);;
+        addMachine(machine);
         money = farm.getMoney() - machine.getCost();
         std:: cout<< "Ai cumparat " << machine.getName() << "!\n";
         std::cout << "Ai ramas cu " << money << " de bani!\n";
@@ -149,23 +156,23 @@ void Farm::buyMachine(const Machine &machine, const Farm &farm) {
     }
 }
 
-void Farm::machineMaintenance(const Machine &machine, const Farm &farm) {
-    std::cout << "Ai nevoie de " << machine.getMaintenance() << " bani ca sa repari " << machine.getName() << ".\n";
-    std::cout << "Acum ai " << farm.getMoney() << " de bani!\n";
-    if (farm.getMoney() >= machine.getCost()) {
-        const int buildTime = machine.getBuildTime();
-        const std::chrono::seconds waitingTime(buildTime);
-        std:: cout<< "Trebuie sa astepti " << machine.getBuildTime() << "s pentru a se repara!\n";
-        std::this_thread::sleep_for(waitingTime);;
-        money = farm.getMoney() - machine.getMaintenance();
-        std:: cout<< "Ai reparat " << machine.getName() << "!\n";
-        std::cout << "Ai ramas cu " << money << " de bani!\n";
-    }
-    else {
-        std:: cout<< "Nu ai destui bani pentru a repara " << machine.getName() << ".\n";
-        std:: cout<< "Tip! : planteaza produse si hraneste animale pentru a castiga bani!\n";
-    }
-}
+// void Farm::machineMaintenance(const Machine &machine, const Farm &farm) {
+//     std::cout << "Ai nevoie de " << machine.getMaintenance() << " bani ca sa repari " << machine.getName() << ".\n";
+//     std::cout << "Acum ai " << farm.getMoney() << " de bani!\n";
+//     if (farm.getMoney() >= machine.getCost()) {
+//         const int buildTime = machine.getBuildTime();
+//         const std::chrono::seconds waitingTime(buildTime);
+//         std:: cout<< "Trebuie sa astepti " << machine.getBuildTime() << "s pentru a se repara!\n";
+//         std::this_thread::sleep_for(waitingTime);;
+//         money = farm.getMoney() - machine.getMaintenance();
+//         std:: cout<< "Ai reparat " << machine.getName() << "!\n";
+//         std::cout << "Ai ramas cu " << money << " de bani!\n";
+//     }
+//     else {
+//         std:: cout<< "Nu ai destui bani pentru a repara " << machine.getName() << ".\n";
+//         std:: cout<< "Tip! : planteaza produse si hraneste animale pentru a castiga bani!\n";
+//     }
+// }
 
 std::ostream & operator<<(std::ostream &os, const Farm &farm) {
     os << "In ferma ai: \n";
@@ -179,3 +186,273 @@ void Farm::decreaseMoney(int amount) {
     money -= amount;
 }
 
+
+void Farm::addMachine(const Machine& machine) {
+    ownedMachines.push_back(machine);
+    std::cout << "Ai adaugat " << machine.getName() << " in ferma!\n";
+}
+
+void Farm::showOwnedMachines() const {
+    if (ownedMachines.empty()) {
+        std::cout << "Nu ai nicio masina in ferma!\n";
+        return;
+    }
+
+    std::cout << "\n=== MASINILE TALE ===\n";
+    for (size_t i = 0; i < ownedMachines.size(); ++i) {
+        const auto& machine = ownedMachines[i];
+        std::cout << i + 1 << ". " << machine.getName();
+        if (machine.getIsWorking()) {
+            std::cout << " (LUCREAZA)";
+        }
+        std::cout << "\n";
+    }
+    std::cout << "=====================\n";
+}
+
+void Farm::showMachineRecipes(const Machine& machine) const {
+    const auto& recipes = machine.getRecipes();
+    if (recipes.empty()) {
+        std::cout << machine.getName() << " nu are retete disponibile!\n";
+        return;
+    }
+
+    std::cout << "\n=== RETETE PENTRU " << machine.getName() << " ===\n";
+    for (size_t i = 0; i < recipes.size(); ++i) {
+        const auto& recipe = recipes[i];
+        std::cout << i + 1 << ". " << recipe.productName << " (x" << recipe.productQuantity << ")\n";
+        std::cout << "   Timp: " << recipe.productionTime << "s\n";
+        std::cout << "   Ingrediente necesare:\n";
+
+        for (const auto& ingredient : recipe.siloIngredients) {
+            std::cout << "   - " << ingredient.first << ": " << ingredient.second << " kg (din silo)\n";
+        }
+        for (const auto& ingredient : recipe.barnIngredients) {
+            std::cout << "   - " << ingredient.first << ": " << ingredient.second << " buc (din hambar)\n";
+        }
+        std::cout << "\n";
+    }
+    std::cout << "============================================\n";
+}
+
+bool Farm::checkIngredientsAvailable(const Recipe& recipe) const {
+    // Verifica ingredientele din silo
+    for (const auto& ingredient : recipe.siloIngredients) {
+        if (!silo.hasEnough(ingredient.first, ingredient.second)) {
+            return false;
+        }
+    }
+
+    // Verifica ingredientele din hambar
+    for (const auto& ingredient : recipe.barnIngredients) {
+        if (!barn.hasEnough(ingredient.first, ingredient.second)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void Farm::consumeIngredients(const Recipe& recipe) {
+    // Consuma ingredientele din silo
+    for (const auto& ingredient : recipe.siloIngredients) {
+        silo.removeItem(ingredient.first, ingredient.second);
+        std::cout << "Consumi " << ingredient.second << " kg de " << ingredient.first << " din silo.\n";
+    }
+
+    // Consuma ingredientele din hambar
+    for (const auto& ingredient : recipe.barnIngredients) {
+        barn.removeItem(ingredient.first, ingredient.second);
+        std::cout << "Consumi " << ingredient.second << " buc de " << ingredient.first << " din hambar.\n";
+    }
+}
+
+void Farm::produceWithMachine(int machineIndex) {
+    if (machineIndex < 0 || machineIndex >= static_cast<int>(ownedMachines.size())) {
+        std::cout << "Masina selectata nu exista!\n";
+        return;
+    }
+
+    Machine& machine = ownedMachines[machineIndex];
+
+    if (machine.getIsWorking()) {
+        std::cout << machine.getName() << " lucreaza deja! Asteapta sa termine.\n";
+        return;
+    }
+
+    const auto& recipes = machine.getRecipes();
+    if (recipes.empty()) {
+        std::cout << machine.getName() << " nu are retete disponibile!\n";
+        return;
+    }
+
+    std::cout << "\nAlege o reteta pentru " << machine.getName() << ":\n";
+    for (size_t i = 0; i < recipes.size(); ++i) {
+        std::cout << i + 1 << ". " << recipes[i].productName << " (x" << recipes[i].productQuantity << ")\n";
+    }
+
+    int recipeChoice;
+    std::cout << "Alege reteta (1-" << recipes.size() << "): ";
+    std::cin >> recipeChoice;
+
+    if (recipeChoice < 1 || recipeChoice > static_cast<int>(recipes.size())) {
+        std::cout << "Alegere invalida!\n";
+        return;
+    }
+
+    const Recipe& selectedRecipe = recipes[recipeChoice - 1];
+
+    std::cout << "\nVerific ingredientele...\n";
+    if (!checkIngredientsAvailable(selectedRecipe)) {
+        std::cout << "Nu ai destule ingrediente pentru aceasta reteta!\n";
+        std::cout << "Ingrediente necesare:\n";
+        for (const auto& ingredient : selectedRecipe.siloIngredients) {
+            std::cout << "- " << ingredient.first << ": " << ingredient.second << " kg (din silo)\n";
+        }
+        for (const auto& ingredient : selectedRecipe.barnIngredients) {
+            std::cout << "- " << ingredient.first << ": " << ingredient.second << " buc (din hambar)\n";
+        }
+        return;
+    }
+
+    std::cout << "Incepem productia de " << selectedRecipe.productName << "!\n";
+    consumeIngredients(selectedRecipe);
+
+    machine.setWorking(true);
+    std::cout << "Masina " << machine.getName() << " lucreaza...\n";
+    std::cout << "Timp de productie: " << selectedRecipe.productionTime << " secunde\n";
+
+    // Foloseste progress bar-ul existent
+    progressBar(selectedRecipe.productionTime);
+
+    machine.setWorking(false);
+
+    std::cout << "Productia s-a terminat!\n";
+    std::cout << "Ai produs " << selectedRecipe.productQuantity << " x " << selectedRecipe.productName << "!\n";
+
+    // Adauga produsul in silo (produsele procesate se pun in silo)
+    silo.storePlants(selectedRecipe.productName, selectedRecipe.productQuantity);
+
+    // Calculeaza banii castigati (produsele procesate valoreaza mai mult)
+    int earnedMoney = selectedRecipe.productQuantity * 20; // 20 bani per produs procesat
+    money += earnedMoney;
+    std::cout << "Ai castigat " << earnedMoney << " bani din vanzarea produselor!\n";
+    std::cout << "Acum ai " << money << " bani in total!\n";
+}
+
+void Farm::showProductionMenu() {
+    while (true) {
+        std::cout << "\n=== MENIU PRODUCTIE ===\n";
+        std::cout << "1. Vezi masinile tale\n";
+        std::cout << "2. Vezi retetele unei masini\n";
+        std::cout << "3. Produce cu o masina\n";
+        std::cout << "4. Cumpara masina noua\n";
+        std::cout << "5. Vezi continutul fermei\n";
+        std::cout << "6. Iesire din meniu\n";
+        std::cout << "Alege optiunea: ";
+
+        int choice;
+        std::cin >> choice;
+
+        switch (choice) {
+            case 1:
+                showOwnedMachines();
+                break;
+
+            case 2: {
+                showOwnedMachines();
+                if (!ownedMachines.empty()) {
+                    int machineChoice;
+                    std::cout << "Pentru care masina vrei sa vezi retetele? (1-" << ownedMachines.size() << "): ";
+                    std::cin >> machineChoice;
+                    if (machineChoice >= 1 && machineChoice <= static_cast<int>(ownedMachines.size())) {
+                        showMachineRecipes(ownedMachines[machineChoice - 1]);
+                    } else {
+                        std::cout << "Alegere invalida!\n";
+                    }
+                }
+                break;
+            }
+
+            case 3: {
+                showOwnedMachines();
+                if (!ownedMachines.empty()) {
+                    int machineChoice;
+                    std::cout << "Cu care masina vrei sa produci? (1-" << ownedMachines.size() << "): ";
+                    std::cin >> machineChoice;
+                    produceWithMachine(machineChoice - 1);
+                }
+                break;
+            }
+
+            case 4: {
+                std::cout << "\n=== MAGAZIN MASINI ===\n";
+                std::cout << "Ai " << money << " bani disponibili.\n\n";
+                std::cout << "1. Moara (150 bani) - Produce faina din cereale\n";
+                std::cout << "2. Brutarie (200 bani) - Produce paine si prajituri\n";
+                std::cout << "3. Laptarie (180 bani) - Produce branza, unt, iaurt\n";
+                std::cout << "4. Macelarie (220 bani) - Produce carnati si sunca\n";
+                std::cout << "5. Distilerie (300 bani) - Produce bere si whiskey\n";
+                std::cout << "6. Tesatorie (250 bani) - Produce tesaturi\n";
+                std::cout << "0. Anuleaza cumpararea\n";
+                std::cout << "Ce masina vrei sa cumperi? (0-6): ";
+
+                int machineChoice;
+                std::cin >> machineChoice;
+
+                if (machineChoice == 0) {
+                    std::cout << "Cumparare anulata.\n";
+                    break;
+                }
+
+                Machine newMachine;
+                bool validChoice = true;
+
+                switch (machineChoice) {
+                    case 1: newMachine = Machine::createFlourMill(); break;
+                    case 2: newMachine = Machine::createBakery(); break;
+                    case 3: newMachine = Machine::createDairy(); break;
+                    case 4: newMachine = Machine::createButchery(); break;
+                    case 5: newMachine = Machine::createBrewery(); break;
+                    case 6: newMachine = Machine::createTextileMill(); break;
+                    default:
+                        std::cout << "Alegere invalida!\n";
+                        validChoice = false;
+                        break;
+                }
+
+                if (validChoice) {
+                    if (money >= newMachine.getCost()) {
+                        money -= newMachine.getCost();
+                        addMachine(newMachine);
+                        std::cout << "Ai cumparat " << newMachine.getName() << " cu " << newMachine.getCost() << " bani!\n";
+                        std::cout << "Ai ramas cu " << money << " bani!\n";
+
+                        // Arata progress bar pentru constructie
+                        std::cout << "Se construieste masina...\n";
+                        progressBar(newMachine.getBuildTime());
+                        std::cout << newMachine.getName() << " a fost construita cu succes!\n";
+                    } else {
+                        std::cout << "Nu ai destui bani! Ai nevoie de " << newMachine.getCost() << " bani, dar ai doar " << money << ".\n";
+                        std::cout << "Tip: Planteaza mai multe produse si hraneste animale pentru a castiga bani!\n";
+                    }
+                }
+                break;
+            }
+
+            case 5:
+                std::cout << *this;
+                silo.siloContent();
+                barn.barnContent();
+                break;
+
+            case 6:
+                std::cout << "Iesire din meniul de productie.\n";
+                return;
+
+            default:
+                std::cout << "Optiune invalida!\n";
+                break;
+        }
+    }
+}

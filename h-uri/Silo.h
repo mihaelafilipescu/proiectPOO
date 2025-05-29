@@ -8,7 +8,6 @@
 #include <string>
 #include <vector>
 
-
 class Silo {
     std::vector<std::pair<std::string, int>> storedPlants;
 public:
@@ -29,9 +28,11 @@ public:
     void storePlants( const std::string& plantName, int quantity);
 
     void siloContent() const;
+
+    // Functii noi pentru machine production
+    bool hasEnough(const std::string& itemName, int quantity) const;
+    void removeItem(const std::string& itemName, int quantity);
+    const std::vector<std::pair<std::string, int>>& getStoredPlants() const;
 };
-
-
-
 
 #endif //SILO_H

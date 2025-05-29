@@ -8,6 +8,7 @@
 #include "Barn.h"
 #include "Machine.h"
 #include "Silo.h"
+#include <vector>
 
 class Plant;
 class Weed;
@@ -15,9 +16,11 @@ class Rabbit; // Forward declaration
 class NonPets;
 
 class Farm {
-    int money = 50;
+    int money = 500;
     Silo silo;
     Barn barn;
+    std::vector<Machine> ownedMachines;
+
 public:
     int getMoney () const;
 
@@ -53,8 +56,17 @@ public:
 
     void decreaseMoney(int amount);
 
+    void addMachine(const Machine& machine);
+    void showOwnedMachines() const;
+    void showMachineRecipes(const Machine& machine) const;
+    bool checkIngredientsAvailable(const Recipe& recipe) const;
+    void consumeIngredients(const Recipe& recipe);
+    void produceWithMachine(int machineIndex);
+    void showProductionMenu();
+
+    Silo& getSilo() { return silo; }
+    Barn& getBarn() { return barn; }
+    const std::vector<Machine>& getOwnedMachines() const { return ownedMachines; }
 };
-
-
 
 #endif //FARM_H

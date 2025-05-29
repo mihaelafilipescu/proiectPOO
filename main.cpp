@@ -40,7 +40,7 @@ int main() {
             Grill("Grill", 200, 40, 1600);
 
     std :: cout << "Bine ai venit in ferma ta!\n" << "Ce doresti sa faci acum?\n";
-    std :: cout << "- sa plantez recolta (1) \n" << "- sa hranesc animalele (2) \n" << "- sa interactionez cu animalele (3)\n" <<  "- sa construiesc o masinarie (4)\n" << "- sa repar o masinarie (5)\n";
+    std :: cout << "- sa plantez recolta (1) \n" << "- sa hranesc animalele (2) \n" << "- sa interactionez cu animalele (3)\n" <<  "- sa construiesc o masinarie (4)\n" << "- sa produc cu masinile (5)\n" << "- sa vad starea fermei (6)\n";
 
     int ans1, ans2, ans3, ans4, ans5;
     std :: string continueGame;
@@ -155,26 +155,22 @@ int main() {
                 }break;
 
             case 5:
-                std::cout << "Ce masinarie doresti sa repari?\n";
-                std::cout << "- brutarie (1)\n" << "- cuptor (2)\n" << "- masina de popcorn (3)\n" << "- gratar (4)\n";
-                std :: cin >> ans5;
-                switch (ans5) {
-                    case 1:
-                        myFarm.machineMaintenance(Bakery, myFarm);
-                        break;
-                    case 2:
-                        myFarm.machineMaintenance(Oven, myFarm);
-                        break;
-                    case 3:
-                        myFarm.machineMaintenance(Popcorn, myFarm);
-                        break;
-                    case 4:
-                        myFarm.machineMaintenance(Grill, myFarm);
-                        break;
-                }break;
+                std::cout << "\n=== MENIU PRODUCTIE CU MASINI ===\n";
+                myFarm.showProductionMenu();
+                break;
+
+            case 6:
+                std::cout << "\n=== STAREA FERMEI ===\n";
+                std::cout << myFarm << "\n";
+                myFarm.getSilo().siloContent();
+                std::cout << "\n";
+                myFarm.getBarn().barnContent();
+                std::cout << "\n";
+                myFarm.showOwnedMachines();
+                break;
 
             default:
-                std::cout << "Alegere invalida! Te rog sa alegi o optiune valida (1-5).\n";
+                std::cout << "Alegere invalida! Te rog sa alegi o optiune valida (1-7).\n";
                 break;
         }
 
@@ -184,7 +180,7 @@ int main() {
         if (continueGame == "Nu" || continueGame == "nu" || continueGame == "NU" || continueGame == "no" || continueGame == "NO")
             break;
 
-        std:: cout << "\nCe doresti sa faci acum?\n" << "- sa plantez recolta (1) \n" << "- sa hranesc animalele (2) \n" << "- sa interactionez cu animalele (3)\n" << "- sa construiesc o masinarie (4)\n" << "- sa repar o masinarie (5)\n";
+        std:: cout << "\nCe doresti sa faci acum?\n" << "- sa plantez recolta (1) \n" << "- sa hranesc animalele (2) \n" << "- sa interactionez cu animalele (3)\n" << "- sa construiesc o masinarie (4)\n" << "- sa produc cu masinile (5)\n" << "- sa vad starea fermei (6)\n";
     }
 
     std::cout << "\nMultumesc ca ai jucat! La revedere!\n";

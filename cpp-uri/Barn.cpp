@@ -50,3 +50,32 @@ std::ostream & operator<<(std::ostream &os, const Barn &barn) {
     }
     return os;
 }
+
+// Functii noi pentru machine production
+bool Barn::hasEnough(const std::string& itemName, int quantity) const {
+    for (const auto& item : storedItems) {
+        if (item.first == itemName) {
+            return item.second >= quantity;
+        }
+    }
+    return false;
+}
+
+void Barn::removeItem(const std::string& itemName, int quantity) {
+    for (size_t i = 0; i < storedItems.size(); ++i) {
+        if (storedItems[i].first == itemName) {
+            if (storedItems[i].second >= quantity) {
+                storedItems[i].second -= quantity;
+                // Remove item completely if quantity becomes 0
+                if (storedItems[i].second == 0) {
+                    storedItems.erase(storedItems.begin() + i);
+                }
+                return;
+            }
+        }
+    }
+}
+
+const std::vector<std::pair<std::string, int>>& Barn::getStoredItems() const {
+    return storedItems;
+}

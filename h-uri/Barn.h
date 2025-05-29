@@ -21,15 +21,16 @@ public:
 
     Barn & operator=(const Barn &other);
 
-
     friend std::ostream& operator<<(std::ostream& os, const Barn& barn);
 
     void storeItems( const std::string& itemName, int quantity);
 
     void barnContent() const;
+
+    // Functii noi pentru machine production
+    bool hasEnough(const std::string& itemName, int quantity) const;
+    void removeItem(const std::string& itemName, int quantity);
+    const std::vector<std::pair<std::string, int>>& getStoredItems() const;
 };
-
-
-
 
 #endif //BARN_H
