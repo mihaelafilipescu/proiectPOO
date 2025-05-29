@@ -7,9 +7,9 @@
 Weed::Weed() {
 }
 
-Weed::Weed(const std::string &name, const int cost, const int grow_time, const int resulted_money, const bool poisonous,
+Weed::Weed(const std::string &name, const int cost, const int grow_time, const int resulted_money,
     const int removeCost):
-    Plant(name, cost, grow_time, resulted_money), isPoisonous(poisonous), RemoveCost(removeCost) {}
+    Plant(name, cost, grow_time, resulted_money), RemoveCost(removeCost) {}
 
 Weed::~Weed() {
 }
