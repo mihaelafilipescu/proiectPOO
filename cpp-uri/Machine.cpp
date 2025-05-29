@@ -27,9 +27,9 @@ void Machine::setWorking(bool working) {
     isWorking = working;
 }
 
-void Machine::addRecipe(const Recipe& recipe) {
-    recipes.push_back(recipe);
-}
+// void Machine::addRecipe(const Recipe& recipe) {
+//     recipes.push_back(recipe);
+// }
 
 Machine Machine::createFlourMill() {
     std::vector<Recipe> recipes;

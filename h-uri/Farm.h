@@ -16,9 +16,9 @@ class Rabbit; // Forward declaration
 class NonPets;
 
 class Farm {
-    int money = 500;
     Silo silo;
     Barn barn;
+    int money = 500;
     std::vector<Machine> ownedMachines;
 
 public:

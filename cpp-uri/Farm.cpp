@@ -156,24 +156,6 @@ void Farm::buyMachine(const Machine &machine, const Farm &farm) {
     }
 }
 
-// void Farm::machineMaintenance(const Machine &machine, const Farm &farm) {
-//     std::cout << "Ai nevoie de " << machine.getMaintenance() << " bani ca sa repari " << machine.getName() << ".\n";
-//     std::cout << "Acum ai " << farm.getMoney() << " de bani!\n";
-//     if (farm.getMoney() >= machine.getCost()) {
-//         const int buildTime = machine.getBuildTime();
-//         const std::chrono::seconds waitingTime(buildTime);
-//         std:: cout<< "Trebuie sa astepti " << machine.getBuildTime() << "s pentru a se repara!\n";
-//         std::this_thread::sleep_for(waitingTime);;
-//         money = farm.getMoney() - machine.getMaintenance();
-//         std:: cout<< "Ai reparat " << machine.getName() << "!\n";
-//         std::cout << "Ai ramas cu " << money << " de bani!\n";
-//     }
-//     else {
-//         std:: cout<< "Nu ai destui bani pentru a repara " << machine.getName() << ".\n";
-//         std:: cout<< "Tip! : planteaza produse si hraneste animale pentru a castiga bani!\n";
-//     }
-// }
-
 std::ostream & operator<<(std::ostream &os, const Farm &farm) {
     os << "In ferma ai: \n";
     os << "- " << farm.money << " bani \n";
