@@ -2,7 +2,7 @@
 // Created by sim on 5/26/2025.
 //
 
-#include "Weed.h"
+#include "../h-uri/Weed.h"
 
 Weed::Weed() {
 }

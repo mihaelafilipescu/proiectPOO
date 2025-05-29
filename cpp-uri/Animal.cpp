@@ -2,7 +2,7 @@
 // Created by sim on 5/26/2025.
 //
 
-#include "Animal.h"
+#include "../h-uri/Animal.h"
 
 const std::string & Animal::getName() const { return Name; }
 

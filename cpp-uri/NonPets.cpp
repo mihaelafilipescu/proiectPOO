@@ -2,10 +2,8 @@
 // Created by sim on 5/26/2025.
 //
 #include <iostream>
-#include "NonPets.h"
-#include "Farm.h"
-
-
+#include "../h-uri/NonPets.h"
+#include "../h-uri/Farm.h"
 
 
 NonPets::NonPets(): Animal("", 0, 0), ResultedGood(""), resultedMoney(0) {}

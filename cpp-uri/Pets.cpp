@@ -2,7 +2,7 @@
 // Created by sim on 5/26/2025.
 //
 
-#include "Pets.h"
+#include "../h-uri/Pets.h"
 
 Pets::Pets(): Animal("", 0, 0), petted(false) {
 }

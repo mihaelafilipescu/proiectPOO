@@ -2,7 +2,7 @@
 // Created by sim on 5/26/2025.
 //
 
-#include "Rabbit.h"
+#include "../h-uri/Rabbit.h"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>

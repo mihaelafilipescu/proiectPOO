@@ -2,16 +2,16 @@
 #include <string>
 #include <ostream>
 #include <indicators.hpp>
-#include "Animal.h"
-#include "Pets.h"
-#include "NonPets.h"
-#include "Rabbit.h"
-#include "Plant.h"
-#include "Weed.h"
-#include "Machine.h"
-#include "Silo.h"
-#include "Barn.h"
-#include "Farm.h"
+#include "../h-uri/Animal.h"
+#include "../h-uri/Pets.h"
+#include "../h-uri/NonPets.h"
+#include "../h-uri/Rabbit.h"
+#include "../h-uri/Plant.h"
+#include "../h-uri/Weed.h"
+#include "../h-uri/Machine.h"
+#include "../h-uri/Silo.h"
+#include "../h-uri/Barn.h"
+#include "../h-uri/Farm.h"
 
 
 int main() {
