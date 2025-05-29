@@ -5,6 +5,8 @@
 #ifndef PLANT_H
 #define PLANT_H
 #include <string>
+#include "Farm.h"
+
 
 
 class Plant {

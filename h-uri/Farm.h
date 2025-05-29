@@ -7,12 +7,12 @@
 #include <indicators.hpp>
 #include "Barn.h"
 #include "Machine.h"
-#include "NonPets.h"
-#include "Plant.h"
-#include "Rabbit.h"
 #include "Silo.h"
-#include "Weed.h"
 
+class Plant;
+class Weed;
+class Rabbit; // Forward declaration
+class NonPets;
 
 class Farm {
     int money = 50;
@@ -43,14 +43,16 @@ public:
 
     void progressBar (int timp);
 
-
     void harvestPlant(const Plant& plant, const Weed& weed);
 
-    void feedAnimal(const NonPets& animal,  Rabbit& rabbit);
+    void feedAnimal(NonPets& animal,  Rabbit& rabbit);
 
     void buyMachine(const Machine &machine, const Farm &farm);
 
     void machineMaintenance(const Machine &machine, const Farm &farm);
+
+    void decreaseMoney(int amount);
+
 };
 
 

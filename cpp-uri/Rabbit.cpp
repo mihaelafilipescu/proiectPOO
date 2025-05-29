@@ -3,6 +3,9 @@
 //
 
 #include "Rabbit.h"
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 Rabbit::Rabbit(): Animal("", 0, 0), Pets(false), NonPets("", 0) {}
 
@@ -33,5 +36,40 @@ void Rabbit::rabbitInterference(int &money) {
 }
 
 void Rabbit::interact() const {
-    std::cout << "Ai hrănit " << getName() << " și ai obținut " << getResultedGood() << ".\n";
+    std::cout << "Interactionezi cu iepurele " << getName() << ".\n";
+    std::cout << "Ce vrei sa faci?\n";
+    std::cout << "1. Il mangai (ATENTIE: Exista riscul sa te muste!)\n";
+    std::cout << "2. Il hranesti si obtii " << getResultedGood() << "\n";
+
+    int choice;
+    std::cin >> choice;
+
+    if (choice == 1) {
+        std::cout << "AVERTIZARE: Iepurele poate sa te muste! Esti sigur? (1 - Da, 2 - Nu): ";
+        int confirm;
+        std::cin >> confirm;
+
+        if (confirm == 1) {
+
+            if (attemptPetting()) {
+                std::cout << "AUCH! " << getName() << " te-a muscat! Ai primit o mica rana!\n";
+                std::cout << "Poate data viitoare sa fii mai atent...\n";
+            } else {
+                std::cout << "Norocul tau! " << getName() << " te-a lasat sa il mangai si pare fericit!\n";
+            }
+        } else {
+            std::cout << "Ai ales sa nu risti. Decizie inteleapta!\n";
+        }
+    } else if (choice == 2) {
+        std::cout << "Ai hranit " << getName() << " si ai obtinut " << getResultedGood() << ".\n";
+        std::cout << "Ai castigat " << getRestultedMoney() << " bani din vanzarea produsului!\n";
+    } else {
+        std::cout << "Alegere invalida!\n";
+    }
+}
+
+bool Rabbit::attemptPetting() const {
+    std::srand(std::time(nullptr));
+    // 30% șansă să te muste iepurele
+    return (std::rand() % 100) < 30;
 }

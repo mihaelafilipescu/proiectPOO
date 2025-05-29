@@ -2,7 +2,9 @@
 // Created by sim on 5/26/2025.
 //
 
-#include "../h-uri/Plant.h"
+#include "Plant.h"
+#include "Farm.h"
+
 
 int Plant::baseGetGrowTime() const { return GrowTime; }
 

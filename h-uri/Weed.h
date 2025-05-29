@@ -8,6 +8,8 @@
 #include <iostream>
 #include "Plant.h"
 
+class Plant;
+
 
 class Weed : public Plant {
     bool isPoisonous;
@@ -17,9 +19,10 @@ public:
     // [[nodiscard]] int getRemoveCost() const { return RemoveCost; };
     // [[nodiscard]] bool getIsPoisonous() const { if (isPoisonous) return true ; return false; }
     Weed (const std::string& name, const int cost, const int grow_time, const int resulted_money, const bool poisonous, const int removeCost);
-    ~Weed() override;
+    ~Weed();
 
-    int getGrowTime() const override;
+    int getGrowTime() const;
+    void removeWeeds(Farm &farm) const;
 };
 
 

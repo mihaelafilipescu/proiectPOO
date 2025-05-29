@@ -2,7 +2,11 @@
 // Created by sim on 5/26/2025.
 //
 
-#include "../h-uri/Farm.h"
+#include "Farm.h"
+#include "Plant.h"
+#include "Rabbit.h"
+#include "NonPets.h"
+#include "Weed.h"
 
 int Farm::getMoney() const { return money; }
 
@@ -66,7 +70,7 @@ void Farm::progressBar(int timp) {
         bar.tick();
         if (bar.is_completed())
             break;
-        std::this_thread::sleep_for(std::chrono::milliseconds(timp));
+        std::this_thread::sleep_for(std::chrono::milliseconds(timp*10));
     }
 
 }
@@ -81,6 +85,7 @@ void Farm::harvestPlant(const Plant &plant, const Weed &weed) {
         std:: cout << "Ai plantat " << count << " kg de "  << plant.getName() << "! Trebuie sa astepti "
                 << waitingTime << " secunde ca sa poti sa le culegi!\n";
         weed.getGrowTime();
+        weed.removeWeeds(*this);
         // std::this_thread::sleep_for(waitingTime);
         progressBar(growTimeInSeconds);
         std:: cout << "Felicitari, ai cules " << count << " kg de " << plant.getName() << "!\n";
@@ -91,7 +96,7 @@ void Farm::harvestPlant(const Plant &plant, const Weed &weed) {
     silo.siloContent();
 }
 
-void Farm::feedAnimal(const NonPets &animal, Rabbit &rabbit) {
+void Farm::feedAnimal(NonPets &animal, Rabbit &rabbit) {
     std::string raspuns;
     std::cout<<"Vrei sa hranesti " << animal.getName() <<"? (da/nu)\n";
     std::cin >> raspuns;
@@ -169,3 +174,8 @@ std::ostream & operator<<(std::ostream &os, const Farm &farm) {
     os << "- " << farm.barn << "\n";
     return os;
 }
+
+void Farm::decreaseMoney(int amount) {
+    money -= amount;
+}
+

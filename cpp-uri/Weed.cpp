@@ -2,7 +2,7 @@
 // Created by sim on 5/26/2025.
 //
 
-#include "../h-uri/Weed.h"
+#include "Weed.h"
 
 Weed::Weed() {
 }
@@ -27,7 +27,18 @@ int Weed::getGrowTime() const {
         std::uniform_int_distribution<> weedDelay(1, 10);
         extraTime = weedDelay(gen);
         std::cout << "Ups! Au aparut buruieni. Timpul de recoltare a fost prelungit cu "
-                << extraTime << " secunde.\n";
+                << extraTime << " secunde).\n";
     }
+
     return baseGetGrowTime() + extraTime;
+
+}
+
+void Weed::removeWeeds(Farm &farm) const {
+    if (farm.getMoney() >= RemoveCost) {
+        farm.decreaseMoney(RemoveCost);
+        std::cout << "Ai platit " << RemoveCost << " bani ca sa scoti buruienile!\n";
+    } else {
+        std::cout << "Nu ai destui bani pentru a indeparta buruienile! Vor afecta recolta.\n";
+    }
 }
