@@ -2,11 +2,11 @@
 // Created by sim on 5/26/2025.
 //
 
-#include "Farm.h"
-#include "Plant.h"
-#include "Rabbit.h"
-#include "NonPets.h"
-#include "Weed.h"
+#include "../h-uri/Farm.h"
+#include "../h-uri/Plant.h"
+#include "../h-uri/Rabbit.h"
+#include "../h-uri/NonPets.h"
+#include "../h-uri/Weed.h"
 
 int Farm::getMoney() const { return money; }
 
