@@ -88,7 +88,7 @@ int main() {
 
             std::cin >> ans3;
 
-            Animal* animalPtr = nullptr;
+            const Animal* animalPtr = nullptr;
 
             if (ans3 == 1) animalPtr = &Dog;
             else if (ans3 == 2) animalPtr = &Cat;
