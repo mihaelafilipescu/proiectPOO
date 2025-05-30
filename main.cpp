@@ -47,140 +47,110 @@ int main() {
 
     while (true) {
         std :: cin >> ans1;
-        switch (ans1) {
-            case 1:
-                std :: cout<< "Ce vrei sa plantezi?\n";
-                std :: cout << "- grau (1) \n" << "- porumb (2) \n" << "- fasole (3) \n" << "- morcovi (4) \n";
-                std :: cin >> ans2;
-                switch (ans2) {
-                    case 1:
-                        myFarm.harvestPlant(Wheat, Mohor);
-                        break;
-                    case 2:
-                        myFarm.harvestPlant(Corn, Volbura);
-                        break;
-                    case 3:
-                        myFarm.harvestPlant(Bean, Volbura);
-                        break;
-                    case 4:
-                        myFarm.harvestPlant(Carrot, Volbura);
-                        break;
-                }break;
+        if (ans1 == 1) {
+            std::cout << "Ce vrei sa plantezi?\n";
+            std::cout << "- grau (1) \n" << "- porumb (2) \n" << "- fasole (3) \n" << "- morcovi (4) \n";
+            std::cin >> ans2;
 
-            case 2:
-                std :: cout<< "Ce animale vrei sa hranesti?\n";
-                std :: cout << "- gaini (1) \n" << "- vaci (2) \n" << "- porci (3) \n" << "- oi (4) \n" << "- capre (5) \n";
-                std :: cin >> ans2;
-                switch (ans2) {
-                    case 1:
-                        myFarm.feedAnimal(Chicken, rabbit);
-                        break;
-                    case 2:
-                        myFarm.feedAnimal(Cow, rabbit);
-                        break;
-                    case 3:
-                        myFarm.feedAnimal(Pig, rabbit);
-                        break;
-                    case 4:
-                        myFarm.feedAnimal(Sheep, rabbit);
-                        break;
-                    case 5:
-                        myFarm.feedAnimal(Goat, rabbit);
-                        break;
-                }break;
+            if (ans2 == 1)
+                myFarm.harvestPlant(Wheat, Mohor);
+            else if (ans2 == 2)
+                myFarm.harvestPlant(Corn, Volbura);
+            else if (ans2 == 3)
+                myFarm.harvestPlant(Bean, Volbura);
+            else if (ans2 == 4)
+                myFarm.harvestPlant(Carrot, Volbura);
 
-            case 3:
-                std::cout<< "Cu ce animal vrei sa interactionezi?\n";
-                std::cout<< "=== ANIMALE DE COMPANIE ===\n";
-                std::cout<< "- caine (1)\n" << "- pisica (2)\n";
-                std::cout<< "=== ANIMALE DE FERMA ===\n";
-                std::cout<< "- gaini (3)\n" << "- vaci (4)\n" << "- porci (5)\n" << "- oi (6)\n" << "- capre (7)\n";
-                std::cout<< "=== ANIMALE SPECIALE ===\n";
-                std::cout<< "- iepure (8)\n";
+        } else if (ans1 == 2) {
+            std::cout << "Ce animale vrei sa hranesti?\n";
+            std::cout << "- gaini (1) \n" << "- vaci (2) \n" << "- porci (3) \n" << "- oi (4) \n" << "- capre (5) \n";
+            std::cin >> ans2;
 
-                std :: cin >> ans3;
-                switch (ans3) {
-                    case 1:
-                        std::cout << "\n=== INTERACTIONEAZA CU CAINELE ===\n";
-                        Dog.interact();
-                        break;
-                    case 2:
-                        std::cout << "\n=== INTERACTIONEAZA CU PISICA ===\n";
-                        Cat.interact();
-                        break;
-                    case 3:
-                        std::cout << "\n=== INTERACTIONEAZA CU GAINILE ===\n";
-                        Chicken.interact(myFarm, rabbit);
-                        break;
-                    case 4:
-                        std::cout << "\n=== INTERACTIONEAZA CU VACILE ===\n";
-                        Cow.interact(myFarm, rabbit);
-                        break;
-                    case 5:
-                        std::cout << "\n=== INTERACTIONEAZA CU PORCII ===\n";
-                        Pig.interact(myFarm, rabbit);
-                        break;
-                    case 6:
-                        std::cout << "\n=== INTERACTIONEAZA CU OILE ===\n";
-                        Sheep.interact(myFarm, rabbit);
-                        break;
-                    case 7:
-                        std::cout << "\n=== INTERACTIONEAZA CU CAPRELE ===\n";
-                        Goat.interact(myFarm, rabbit);
-                        break;
-                    case 8:
-                        std::cout << "\n=== INTERACTIONEAZA CU IEPURELE ===\n";
-                        rabbit.interact();
-                        break;
-                }
-                break;
+            if (ans2 == 1)
+                myFarm.feedAnimal(Chicken, rabbit);
+            else if (ans2 == 2)
+                myFarm.feedAnimal(Cow, rabbit);
+            else if (ans2 == 3)
+                myFarm.feedAnimal(Pig, rabbit);
+            else if (ans2 == 4)
+                myFarm.feedAnimal(Sheep, rabbit);
+            else if (ans2 == 5)
+                myFarm.feedAnimal(Goat, rabbit);
 
-            case 4:
-                std::cout << "Ce masinarie doresti sa-ti cumperi?\n";
-                std::cout << "- brutarie (1)\n" << "- cuptor (2)\n" << "- masina de popcorn (3)\n" << "- gratar (4)\n";
-                std :: cin >> ans4;
-                switch (ans4) {
-                    case 1:
-                        myFarm.buyMachine(Bakery, myFarm);
-                        break;
-                    case 2:
-                        myFarm.buyMachine(Oven, myFarm);
-                        break;
-                    case 3:
-                        myFarm.buyMachine(Popcorn, myFarm);
-                        break;
-                    case 4:
-                        myFarm.buyMachine(Grill, myFarm);
-                        break;
-                }break;
+        } else if (ans1 == 3) {
+            std::cout << "Cu ce animal vrei sa interactionezi?\n";
+            std::cout << "=== ANIMALE DE COMPANIE ===\n";
+            std::cout << "- caine (1)\n" << "- pisica (2)\n";
+            std::cout << "=== ANIMALE DE FERMA ===\n";
+            std::cout << "- gaini (3)\n" << "- vaci (4)\n" << "- porci (5)\n" << "- oi (6)\n" << "- capre (7)\n";
+            std::cout << "=== ANIMALE SPECIALE ===\n";
+            std::cout << "- iepure (8)\n";
 
-            case 5:
-                std::cout << "\n=== MENIU PRODUCTIE CU MASINI ===\n";
-                myFarm.showProductionMenu();
-                break;
+            std::cin >> ans3;
 
-            case 6:
-                std::cout << "\n=== STAREA FERMEI ===\n";
-                std::cout << myFarm << "\n";
-                myFarm.getSilo().siloContent();
-                std::cout << "\n";
-                myFarm.getBarn().barnContent();
-                std::cout << "\n";
-                myFarm.showOwnedMachines();
-                break;
+            Animal* animalPtr = nullptr;
 
-            default:
-                std::cout << "Alegere invalida! Te rog sa alegi o optiune valida (1-7).\n";
-                break;
+            if (ans3 == 1) animalPtr = &Dog;
+            else if (ans3 == 2) animalPtr = &Cat;
+            else if (ans3 == 3) animalPtr = &Chicken;
+            else if (ans3 == 4) animalPtr = &Cow;
+            else if (ans3 == 5) animalPtr = &Pig;
+            else if (ans3 == 6) animalPtr = &Sheep;
+            else if (ans3 == 7) animalPtr = &Goat;
+            else if (ans3 == 8) animalPtr = &rabbit;
+
+            if (animalPtr) {
+                std::cout << "\n=== INTERACTIONEAZA CU " << animalPtr->getName() << " ===\n";
+                animalPtr->interact();
+            } else {
+                std::cout << "Alegere invalida!\n";
+            }
+
+        } else if (ans1 == 4) {
+            std::cout << "Ce masinarie doresti sa-ti cumperi?\n";
+            std::cout << "- brutarie (1)\n" << "- cuptor (2)\n" << "- masina de popcorn (3)\n" << "- gratar (4)\n";
+            std::cin >> ans4;
+
+            if (ans4 == 1)
+                myFarm.buyMachine(Bakery, myFarm);
+            else if (ans4 == 2)
+                myFarm.buyMachine(Oven, myFarm);
+            else if (ans4 == 3)
+                myFarm.buyMachine(Popcorn, myFarm);
+            else if (ans4 == 4)
+                myFarm.buyMachine(Grill, myFarm);
+
+        } else if (ans1 == 5) {
+            std::cout << "\n=== MENIU PRODUCTIE CU MASINI ===\n";
+            myFarm.showProductionMenu();
+
+        } else if (ans1 == 6) {
+            std::cout << "\n=== STAREA FERMEI ===\n";
+            std::cout << myFarm << "\n";
+            myFarm.getSilo().siloContent();
+            std::cout << "\n";
+            myFarm.getBarn().barnContent();
+            std::cout << "\n";
+            myFarm.showOwnedMachines();
+
+        } else {
+            std::cout << "Alegere invalida! Te rog sa alegi o optiune valida (1-7).\n";
         }
 
-        std :: cout << "\n" << myFarm << "\n"; // Afișează statusul fermei
-        std :: cout << "Doresti sa continui jocul? (da/nu)\n";
-        std :: cin >> continueGame;
+        std::cout << "\n" << myFarm << "\n"; // Afișează statusul fermei
+        std::cout << "Doresti sa continui jocul? (da/nu)\n";
+        std::cin >> continueGame;
+
         if (continueGame == "Nu" || continueGame == "nu" || continueGame == "NU" || continueGame == "no" || continueGame == "NO")
             break;
 
-        std:: cout << "\nCe doresti sa faci acum?\n" << "- sa plantez recolta (1) \n" << "- sa hranesc animalele (2) \n" << "- sa interactionez cu animalele (3)\n" << "- sa construiesc o masinarie (4)\n" << "- sa produc cu masinile (5)\n" << "- sa vad starea fermei (6)\n";
+        std::cout << "\nCe doresti sa faci acum?\n"
+                  << "- sa plantez recolta (1) \n"
+                  << "- sa hranesc animalele (2) \n"
+                  << "- sa interactionez cu animalele (3)\n"
+                  << "- sa construiesc o masinarie (4)\n"
+                  << "- sa produc cu masinile (5)\n"
+                  << "- sa vad starea fermei (6)\n";
     }
 
     std::cout << "\nMultumesc ca ai jucat! La revedere!\n";
